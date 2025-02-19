@@ -1,0 +1,81 @@
+\documentclass[10pt,aspectratio=43]{beamer}
+\usepackage{multimedia}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta}
+\usepackage[normalem]{ulem} % For underlining in hyperlinks
+
+% Define custom colors
+\definecolor{myNewColorA}{RGB}{158, 27, 50} % Maroon-like color
+\definecolor{myNewColorB}{RGB}{90, 27, 158} % Deep blue
+
+% Beamer theme and color settings
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+
+\setbeamercolor*{palette primary}{bg=myNewColorA, fg=white}
+\setbeamercolor*{palette secondary}{bg=myNewColorB, fg=white}
+\setbeamercolor*{palette tertiary}{bg=myNewColorA, fg=white}
+\setbeamercolor*{titlelike}{fg=myNewColorA}
+\setbeamercolor*{item}{fg=myNewColorA}
+\setbeamercolor*{caption name}{fg=myNewColorA}
+\setbeamerfont{title}{size=\Large}
+\setbeamerfont{subtitle}{size=\small}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{institute}{size=\footnotesize}
+
+% Fonts (requires LuaLaTeX or XeLaTeX for custom fonts)
+\usepackage{ocr}
+\usepackage[T1]{fontenc}
+
+% TikZ styles
+\tikzset{
+    vertex/.style={
+        circle,
+        draw=black,
+        fill=gray!20,
+        thick,
+        inner sep=0pt,
+        minimum size=20pt
+    },
+    arrow/.style={
+        -{Stealth[scale=1.2]},
+        thick
+    }
+}
+
+% Title and metadata
+\title{Algorithms, Design \& Analysis}
+\subtitle{Lecture 07: \href{https://docs.google.com/document/d/1RkYqY9OvATMPILDVtHyNG_6apl93wdmuoxnDB3_DeLw/edit?usp=sharing}{\textcolor{blue}{\textbf{Secretary Problem And Integer Multiplication}}}}
+
+
+\author[bscs23092 \& bscs23020]{Mohid \& Wasif}
+\institute[ITU]{Information Technology University}
+\date{11th February,2025}
+\logo{\texorpdfstring{\includegraphics[height=1cm]{figures/general/university_logo.png}}{}}
+
+% Section transition slides
+\AtBeginSection[]{
+  \begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+      \usebeamerfont{title}\insertsectionhead
+    \end{beamercolorbox}
+    \vfill
+  \end{frame}
+}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+% Include external content (Ensure intro.tex exists or remove the line)
+\input{intro}
+
+\end{document}
+
