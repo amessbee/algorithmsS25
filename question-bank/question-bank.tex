@@ -1,0 +1,389 @@
+% -*- program: xelatex -*-
+
+\newif\ifanswers
+%\answerstrue
+
+% Dr Driver's standard reading quiz
+% Source: https://gist.github.com/danieldriver/90a73c4d3c72dd837e39#file-quiz-tex 
+\documentclass[%
+% 11pt,
+% answers,
+addpoints]{exam}
+\usepackage{enumitem}
+ 
+\pagestyle{head}
+
+\usepackage{amssymb,amsmath,amsfonts,amsthm,graphicx}
+
+\usepackage[top=0.3in, bottom=0.75in, left=0.5in, right=0.5in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+
+
+\DeclareGraphicsExtensions{.pdf}
+%\centerline {\includegraphics[width=3in]{PICTURE}}
+
+
+
+\newtheoremstyle{problem}{\topsep}{\topsep}%%% space between body and thm
+		{}                      %%% Thm body font
+		{}                              %%% Indent amount (empty = no indent)
+		{\bfseries}            %%% Thm head font
+		{}                    %%% Punctuation after thm head
+		{ }                           %%% Space after thm head
+		{\thmnumber{#2}\thmnote{ \bfseries (#3)}}%%% Thm head spec
+\theoremstyle{problem}
+\newtheorem{p}{}
+
+\firstpageheader{% left
+	CS \liningnums{3250}: Algorithms --- Asymptotic Practice Problems \\
+	Husnain Haider, 4 September 2023
+}{% center - blank
+}{% right
+	Full name1:\enspace\makebox[2in]{\hrulefill}\\
+	Full name2:\enspace\makebox[2in]{\hrulefill}\\
+}
+\runningheader{}{}{}
+% For double-sided quizzes
+% \pagestyle{headandfoot}
+% \footer{}{\thepage}{}
+
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+ 
+% Typography and layout
+\usepackage{fontspec,realscripts}
+\defaultfontfeatures{Ligatures=TeX}
+%\setmainfont{Meta Serif Pro}
+%\setsansfont{Meta Pro}
+\frenchspacing
+% - print solutions in sans serif
+\unframedsolutions
+\SolutionEmphasis{\sffamily}
+\renewcommand{\solutiontitle}{}
+% - box points & center in the right margin w/ custom setup@point@toks
+\boxedpoints
+\pointsinrightmargin
+\marginbonuspointname{\textsc{up}}
+\makeatletter% rewrite setup@point@toks assuming right margins
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}% define \clap as per https://www.tug.org/TUGboat/tb22-4/tb72perlS.pdf
+\def\setup@point@toks{%
+	\point@toks={%
+		\rlap{\hskip-\@totalleftmargin
+			  \hskip\textwidth
+			  \hskip\@rightmargin
+			  \hskip-\rightpointsmargin
+			  \clap{\padded@point@block}% change \llap to \clap
+		}%
+		\global \point@toks={}%
+	}%
+}% end setup@point@toks
+\setlength{\rightpointsmargin}{.5in}% assuming the default 1" margins
+\makeatother
+% - adjust the top and bottom margins
+\extraheadheight{.25in}
+\extrafootheight{-.5in}
+\setlength{\marginparwidth}{1.5in}
+% NB: remember to use \newpage after the last question
+\usepackage{xcolor}
+\usepackage{pagecolor}
+
+%\pagecolor{black}
+%\color{white}
+
+\usepackage[document]{ragged2e}
+\begin{document}
+
+ \pagestyle{empty}
+ \begin{FlushLeft}
+Question Bank: Analysis of Algorithms\\Dr. Mudassir Shabbir,
+\today
+\end{FlushLeft}
+
+	
+\thispagestyle{myheadings}
+\pagenumbering{gobble}
+\rule{500pt}{1.5pt}
+\begin{p}
+Let us consider the random experiment of rolling two dice.
+\hfill \end{p}
+\begin{enumerate}
+    \item Define a random variable \(X\) as the number of 6's that you get. Find the expected value of \(X\).
+    \item Define a random variable \(Y\) as the sum of the two dice. Find the expected value of \(Y\).
+\end{enumerate}
+
+\begin{p}
+Perform the analysis of Median of Median's Algorithm where we make chunks of size 9 instead of 5 and solve the recurrence using substitution method.
+\hfill \end{p}
+
+\begin{p}
+Let \( X \) be a random variable that is equal to the number of heads in two flips of a  
+fair coin. What is \( E(X^2) \)? What is \( (E(X))^2 \)?
+\hfill \end{p}
+
+\begin{p}
+Apply the algorithm step by step to find the articulation points in the following graphs:
+\end{p}
+
+\begin{center}
+\begin{tikzpicture}[scale=1, every node/.style={draw, circle, inner sep=2pt}]
+    \node (1) at (0, 2) {1};
+    \node (2) at (2, 2) {2};
+    \node (3) at (4, 2) {3};
+    \node (4) at (1, 0) {4};
+
+    \draw (1) -- (2);
+    \draw (2) -- (3);
+    \draw (4) -- (2);
+    \draw (1) -- (4);
+\end{tikzpicture}
+\end{center}
+%\vfill
+\ifanswers
+{\bf SOL:}  $B\wedge (C\to A)$
+\vfill
+\fi
+
+%\vfill
+\ifanswers
+{\bf SOL:}  $B\wedge (C\to A)$
+\vfill
+\fi
+\begin{center}
+\begin{tikzpicture}[scale=1, every node/.style={draw, circle, inner sep=2pt}]
+    \node (1) at (0, 2) {1};
+    \node (2) at (2, 2) {2};
+    \node (3) at (4, 2) {3};
+    \node (4) at (1, 0) {4};
+    \node (5) at (3, 0) {5};
+    \node (6) at (5, 0) {6};
+
+    \draw (1) -- (2);
+    \draw (2) -- (3);
+    \draw (2) -- (4);
+    \draw (3) -- (5);
+    \draw (5) -- (6);
+\end{tikzpicture}
+\end{center}
+
+\begin{p}
+Solve the following recurrence relations:\\
+\vspace{10pt}
+\textbf{a.} \( T(n) = 2T(n/3) + 1 \)\\
+\textbf{b.} \( T(n) = 5T(n/4) + n \)\\
+\textbf{c.} \( T(n) = 9T(n/3) + n^2 \)\\
+\textbf{d.} \( T(n) = 2T(n-1) + 1 \)\\
+\textbf{e.} \( T(n) = T(\sqrt{n}) + 1 \)\\
+\hfill \end{p}
+
+\begin{p}
+An array \( A[1 \dots n] \) is said to have a \textbf{majority element} if more than half of its entries are the same. Given an array, the task is to design an efficient algorithm to determine whether the array has a majority element, and, if so, to find that element. The elements of the array are not necessarily from some ordered domain like the integers, so comparisons of the form “is \( A[i] > A[j]? \)” are not allowed. (Think of the array elements as GIF files, for instance.) However, you can answer questions of the form: “is \( A[i] = A[j]? \)” in constant time.\\
+\vspace{10pt}
+\textbf{Part 1:} Show how to solve this problem in \( O(n \log n) \) time. 
+\textbf{Hint:} Split the array \( A \) into two arrays \( A_1 \) and \( A_2 \) of half the size. Does knowing the majority elements of \( A_1 \) and \( A_2 \) help you figure out the majority element of \( A \)? If so, you can use a \textit{divide-and-conquer} approach.\\
+\vspace{10pt}
+\textbf{Part 2:} Can you give a linear-time algorithm? 
+\textbf{Hint:} Here’s another \textit{divide-and-conquer} approach:
+\begin{itemize}
+    \item Pair up the elements of \( A \) arbitrarily to get \( n/2 \) pairs.
+    \item Look at each pair: if the two elements are different, discard both of them; if they are the same, keep just one of them.
+\end{itemize}
+Show that after this procedure there are at most \( n/2 \) elements left, and that they have a majority element if and only if \( A \) does.
+\hfill \end{p}
+
+\newpage
+
+\begin{p}
+Write an algorithm to merge three sorted arrays into a single sorted array.\\
+\hfill \end{p}
+
+\begin{p}
+Write an algorithm to merge \( k \) sorted arrays into a single sorted array.\\
+\hfill \end{p}
+
+\begin{p}
+Given two arrays \( A \) and \( B \), write an algorithm to find the median of \( A \cup B \) in the following cases:  
+\hfill \end{p}
+\begin{itemize}
+    \item When \( A \) and \( B \) are sorted.
+    \item When \( A \) and \( B \) are unsorted.
+\end{itemize}
+
+\begin{p}
+Give an \( O(n \log k) \)-time algorithm to merge \( k \) sorted lists into one sorted list,  
+where \( n \) is the total number of elements in all the input lists. (Hint: Use a min-heap for \( k \)-way merging.)
+\hfill \end{p}
+
+\begin{p}
+You are given an array of strings, where different strings may have different  
+numbers of characters, but the total number of characters over all the strings  
+is \( n \). Show how to sort the strings in \( O(n) \) time.  
+(Note that the desired order here is the standard alphabetical order; for example,  
+\( a < ab < b \).)
+\hfill \end{p}
+
+\begin{p}
+What is the running time of the Breadth-First Search (BFS) algorithm if we represent its input graph using an adjacency matrix and modify the algorithm to handle this form of input?
+\hfill \end{p}
+
+\begin{p}
+The \textbf{diameter} of a tree \( T = (V, F) \) is defined as \( \max \{ \delta(u, v) : u, v \in V \} \), that is, the largest of all shortest-path distances in the tree. Give an efficient algorithm to compute the diameter of a tree, and analyze the running time of your algorithm.
+\hfill \end{p}
+
+\begin{p}
+Given an $n$ bit integer, write an efficient algorithm to return the square of $n$. In particular, prove that time complexity of product of two numbers is same as the time complexity of squaring a number, i.e., if you can square a $n$ bit number is $ O(f(n) )$ then you can also take the product of two $n$ bit numbers $ O(f(n) )$.
+\hfill \end{p}
+
+\begin{p}
+Suppose you are given a ``black box'' linear-time median finding algorithm. Design a simple linear-time algorithm to find $k^{th}$ smallest element using this algorithm. Note that median finding algorithm that you are given is black-box and you can't change it in anyway; you can just call it to find median of a list in linear-time.
+\hfill \end{p}
+
+\begin{p}
+Solve recurrences.
+\hfill \end{p}
+\begin{itemize}
+			\item $T(n) = 8T(n/3) + n$
+			\item $T(n) = 2T(n/2) + n^{0.5}$
+			\item $T(n) = 3T(n/4) + n\log n$
+			\item $T(n) = T(n-2) + n^2$
+\end{itemize} 
+
+\begin{p}
+Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
+\[
+2^{3n},3^{2n},n!,2^{\log^*n},\log^* 2^{2n}
+\]
+\hfill \end{p}
+
+\begin{p}
+Given a list of $n$ integers, design an efficient algorithm to find a \textit{majority} element. A majority element is an element that appears more than $\lfloor{n/2}\rfloor$ times.
+\hfill \end{p}
+
+\begin{p}
+Given an unweighted directed graph $G=(V,E)$ and a source vertex $s$ and a destination vertex $t$, design an algorithm to find a shortest path from $s$ to $t$.
+\hfill \end{p}
+
+\begin{p}
+Given a simple undirected graph $G=(V,E)$, design an algorithm to compute a new graph $H = (V,F)$ where $(u,v)\in F$ \textit{if and only if}, $d(u,v)\le 2$ in $G$, i.e., $u,v$ are adjacent in $H$ whenever their distance is $1$ or $2$ in the original graph $G$.
+\hfill \end{p}
+
+\begin{p}
+You are given $m$ arrays $A_1, A_2,\ldots, A_m$ where each $A_i$ contains $n$ integers in sorted order. Given an $O(nm\log m)$ algorithm to merge these $m$ sorted arrays into a single sorted array. You may use Priority Queues.
+\hfill \end{p}
+
+\begin{p}
+Given a set $P$ of $n$ two dimensional points, i.e., each point is represented as $(x_i,y_i)$, give an efficient algorithm to compute closest pair of points in $P$, i.e., points in $P$ for which Euclidean distance is minimized.
+\hfill \end{p}
+
+\begin{p}
+Solve recurrences.
+\hfill \end{p}
+\begin{itemize}
+			\item $T(n) = 8T(n/4) + n^{1.5}$
+			\item $T(n) = 3^nT(n/2) + n^{0.5}$
+\end{itemize}
+
+\begin{p}
+Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
+\hfill \end{p}
+\[
+2^{3n},3^{2n},n!,2^{\log^*n},\log^* 2^{2n}
+\]
+
+\begin{p}
+Give runtime complexity of the following algorithm.
+\hfill \end{p}
+\begin{algorithm}[!ht]
+	\label{algo1}
+	\begin{algorithmic}
+		\Procedure{Algo1}{$x$} \Comment{input $x$ is a number}
+		\If{$|x| > 2$}
+		\State \textbf{return} ALGO1($\sqrt{x}$)
+		\Else
+		\State \textbf{return} $x$
+		\EndIf
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{p}
+How to sort $n$ integers in the range $[0,n^3-1]$ in linear time?
+\hfill \end{p}
+
+\begin{p}
+Design and analyze an algorithm to count number of triangles in a simple undirected graph on $n$ vertices.
+\hfill \end{p}
+
+\begin{p}
+Use the recursion tree method to solve \(T(n) = 3T(n/4) + 5n^2\). Draw or describe the cost at each level of recursion and sum it up to find the total asymptotic cost. What is the Big-\(\Theta\) solution for \(T(n)\)?  
+\hfill\end{p}
+
+\begin{p}
+The Tower of Hanoi puzzle satisfies the recurrence \(T(n) = 2T(n-1) + 1\) with base \(T(1) = 1\). Use the substitution method (induction) to solve this recurrence and find a closed-form solution for \(T(n)\).  
+\hfill\end{p}
+
+\begin{p}
+Recurrence with Log Factor: Solve the recurrence \(T(n) = 2T(n/2) + n \log^2 n\). Which method or case of the Master Theorem is appropriate here, and why?  
+\hfill\end{p}
+
+\begin{p}
+Unbalanced Divide-and-Conquer (Quicksort Average-case): Consider the recurrence \(T(n) = T(n/3) + T(2n/3) + O(n)\), which arises from the average-case of QuickSort. Explain how you would solve this recurrence – for instance, by using a recursion tree or the more general Akra-Bazzi theorem (subproblem sizes are uneven) – and give the Big-O solution.  
+\hfill\end{p}
+
+\begin{p}
+Strassen’s Algorithm: The Strassen matrix multiplication algorithm follows the recurrence \(T(n) = 7T(n/2) + O(n^2)\). Use the Master Theorem to determine the time complexity of this algorithm.  
+\hfill\end{p}
+
+\begin{p}
+Let \( G \) be a graph of order \( n \) and size \( m \) that does not have any cycle of length 3.
+\hfill\end{p}
+\begin{itemize}
+    \item Prove that if \( u \) and \( v \) are adjacent vertices of \( G \), then \( d(u) + d(v) \leq n \).
+    \item Prove that if \( n = 2k \), then \( m \leq k^2 \). Hint: Induction on \( k \geq 1 \).
+\end{itemize}
+
+\begin{p}
+Seven people attending a conference want to have lunch together at a round table during the three days that the conference lasts. To get to know each other better, they decide to sit in such a way that two people are next to each other at most once. Can they achieve their goal? What happens if the conference lasts 5 days?  
+\hfill\end{p}
+
+\begin{p}
+You are given \( n \) points in the unit disk, \( p_i = (x_i, y_i) \), such that \( 0 \leq x_i^2 + y_i^2 \leq 1 \) for \( i = 1, 2, \dots, n \). Suppose that the points are uniformly distributed, meaning the probability of finding a point in any region of the disk is proportional to the area of that region.  
+
+Design an algorithm with an average-case running time of \( \Theta(n) \) to sort the \( n \) points by their distances \( d_i = \sqrt{x_i^2 + y_i^2} \) from the origin.  
+
+Hint: Design the bucket sizes in BUCKET-SORT to reflect the uniform distribution of the points in the unit disk.  
+\hfill\end{p}
+
+\begin{p}
+We would like to sort playing cards from a deck. Each card has a denomination (1 to 13) and a suit\\ (\(\text{CLUBS} < \text{DIAMONDS} < \text{HEARTS} < \text{SPADES}\)).  
+
+A card \( c_1 \) is considered less than a card \( c_2 \) if either of the following is true:
+\begin{itemize}
+    \item The suit of \( c_1 \) is less than the suit of \( c_2 \), or
+    \item \( c_1 \) and \( c_2 \) are of the same suit, but the denomination of \( c_1 \) is less than the denomination of \( c_2 \).
+\end{itemize}
+
+(a) Consider sorting cards of the same suit based purely on their denominations using 2-way quicksort. After a random shuffle, we have the sequence:  
+\[ 5, 6, 8, 3, 9, 4, 7. \]  
+Show the result of the first call to \texttt{partition()} by listing the exchanged elements.  
+\hfill\end{p}
+
+\newpage
+
+\begin{p}
+\textbf{Helping Professor to Form Groups Efficiently for a Discrete Structures Class Activity}  
+
+The professor is organizing a group activity for a Discrete Structures class and needs to divide students into 5 to 6 groups based on their collaboration history.  
+
+Professor has the list of students \( V \).
+\begin{enumerate}[label=\alph*)]
+    \item Given a lookup table \( T \), where \( T[u] \) for \( u \in V \) is a list of students that \( u \) has previously worked with, ensure that each group consists of students who are all connected either directly or indirectly. Describe an efficient algorithm that returns the minimum number of groups needed. Analyze its running time. 
+    \item Now suppose there are only two groups available, and you are given a different lookup table \( S \), where \( S[u] \) lists students who have conflicts with \( u \) (e.g., past disagreements or ineffective teamwork). The goal is to form groups such that no two students in the same group have conflicts. Describe an efficient algorithm that determines whether this is possible, returning TRUE if it is and FALSE otherwise. Analyze its running time.  
+\end{enumerate}
+
+\hfill\end{p}
+
+\end{document}
