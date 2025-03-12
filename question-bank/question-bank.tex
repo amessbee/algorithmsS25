@@ -288,14 +288,13 @@ Solve recurrences.
 
 \begin{p}
 Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
-\hfill \end{p}
 \[
 2^{3n},3^{2n},n!,2^{\log^*n},\log^* 2^{2n}
 \]
+\hfill \end{p}
 
 \begin{p}
 Give runtime complexity of the following algorithm.
-\hfill \end{p}
 \begin{algorithm}[!ht]
 	\label{algo1}
 	\begin{algorithmic}
@@ -308,6 +307,7 @@ Give runtime complexity of the following algorithm.
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+\hfill \end{p}
 
 \begin{p}
 How to sort $n$ integers in the range $[0,n^3-1]$ in linear time?
@@ -383,7 +383,306 @@ Professor has the list of students \( V \).
     \item Given a lookup table \( T \), where \( T[u] \) for \( u \in V \) is a list of students that \( u \) has previously worked with, ensure that each group consists of students who are all connected either directly or indirectly. Describe an efficient algorithm that returns the minimum number of groups needed. Analyze its running time. 
     \item Now suppose there are only two groups available, and you are given a different lookup table \( S \), where \( S[u] \) lists students who have conflicts with \( u \) (e.g., past disagreements or ineffective teamwork). The goal is to form groups such that no two students in the same group have conflicts. Describe an efficient algorithm that determines whether this is possible, returning TRUE if it is and FALSE otherwise. Analyze its running time.  
 \end{enumerate}
-
 \hfill\end{p}
+
+\begin{p}
+What are the minimum and maximum numbers of elements in a heap of height \( h \)?
+\hfill\end{p}
+
+\begin{p}
+Where in a max-heap might the smallest element reside, assuming that all elements are distinct?
+\hfill\end{p}
+
+\begin{p} 
+At which levels in a max-heap might the \( k \)th largest element reside, for \( 2 \leq k \leq \lfloor n/2 \rfloor \), assuming that all elements are distinct?  
+\hfill  
+\end{p}
+
+\begin{p} 
+Is an array that is in sorted order a min-heap?  
+\hfill  
+\end{p}
+
+\begin{p} 
+Is the array with values \( \{33, 19, 20, 15, 13, 10, 2, 13, 16, 12\} \) a max-heap?  
+\hfill  
+\end{p}
+
+\begin{p} 
+Suppose that the objects in a max-priority queue are just keys. Illustrate the operation of \textsc{Max-Heap-Insert}(\( A, 10 \)) on the heap \( A = (15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1) \).  
+\hfill  
+\end{p}
+
+\begin{p} 
+Give a brief argument that the running time of \textsc{Partition} on a subarray of size \( n \) is \( \Theta(n) \).  
+\hfill  
+\end{p}
+
+\begin{p} 
+What is the running time of \textsc{Quicksort} when all elements of array \( A \) have the same value?  
+\hfill  
+\end{p}
+
+\begin{p} 
+Show that the running time of \textsc{Quicksort} is \( \Theta(n^2) \) when the array \( A \) contains distinct elements, is sorted in decreasing order and first element is selected as pivot everytime..  
+\hfill  
+\end{p}
+
+\begin{p} 
+Describe an algorithm that, given \( n \) integers in the range \( 0 \) to \( k \), preprocesses its input and then answers any query about how many of the \( n \) integers fall into a range \([a:b]\) in \( O(1) \) time. Your algorithm should use \( \Theta(n + k) \) preprocessing time.  
+\hfill  
+\end{p}
+
+\begin{p} 
+Counting sort can also work efficiently if the input values have fractional parts, but the number of digits in the fractional part is small. Suppose that you are given \( n \) numbers in the range \( 0 \) to \( k \), each with at most \( d \) decimal (base 10) digits to the right of the decimal point. Modify counting sort to run in \( \Theta(n + 10^d k) \) time.  
+\hfill  
+\end{p}
+
+\begin{p} 
+Given an adjacency-list representation of a directed graph, how long does it take to compute the out-degree of every vertex? How long does it take to compute the in-degrees?  
+\hfill  
+\end{p}
+
+\begin{p} 
+The \textit{transpose} of a directed graph \( G = (V, E) \) is the graph \( G^T = (V, E^T) \), where \( E^T = \{(v, u) \in V \times V : (u, v) \in E\} \). That is, \( G^T \) is \( G \) with all its edges reversed.  
+Describe efficient algorithms for computing \( G^T \) from \( G \), for both the adjacency-list and adjacency-matrix representations of \( G \). Analyze the running times of your algorithms.  
+\hfill  
+\end{p}
+
+\begin{p} 
+There are two types of professional wrestlers: "faces" (short for “babyfaces,” i.e., “good guys”) and “heels” (“bad guys”). Between any pair of professional wrestlers, there may or may not be a rivalry. You are given the names of \( n \) professional wrestlers and a list of \( r \) pairs of wrestlers for which there are rivalries. Give an \( O(n + r) \)-time algorithm that determines whether it is possible to designate some of the wrestlers as faces and the remainder as heels such that each rivalry is between a face and a heel. If it is possible to perform such a designation, your algorithm should produce it.  
+\hfill  
+\end{p}
+
+\begin{p} 
+Another way to topologically sort a directed acyclic graph \( G = (V, E) \) is to repeatedly find a vertex of in-degree 0, output it, and remove it and all of its outgoing edges from the graph. Explain how to implement this idea so that it runs in time \( O(V + E) \). What happens to this algorithm if \( G \) has cycles?  
+\hfill  
+\end{p}
+
+\begin{p} 
+How can the number of strongly connected components of a graph change if a new edge is added?  
+\hfill  
+\end{p}
+
+\begin{p}
+Find a cycle in a graph.  
+\hfill
+\end{p}
+
+\begin{p}
+Prove that the height of a union-find data structure with path compression is at most $\log n$, i.e., $H(UF) \leq \log n$.  
+\hfill
+\end{p}
+
+\begin{p}
+KaratSuba when the numbers are divided into 4 parts.
+\hfill\end{p}
+
+\begin{p}
+Suppose you are given an infinite chessboard with some blocked cells. A knight (which moves in an "L" shape) starts at position $(0,0)$. Given a target position $(x, y)$, determine the minimum number of moves required to reach the target (or return $-1$ if impossible).
+\hfill\end{p}
+
+\begin{p}
+\textbf{Sorting a Database of 10 BILLION People (Name, Age, Salary, Country)}
+
+You have 10 billion records where each person has:
+
+\begin{enumerate}
+    \item \textbf{Name} (String, up to 50 characters)
+    \item \textbf{Age} (Integer, 0 to 120)
+    \item \textbf{Salary} (Integer, 4 to 8 digits)
+    \item \textbf{Country} (3-letter country code, e.g., "USA", "IND")
+\end{enumerate}
+
+Sort them in the following order:
+
+\begin{enumerate}
+    \item[\textcircled{1}] \textbf{Country} (alphabetically)
+    \item[\textcircled{2}] \textbf{Age} (ascending)
+    \item[\textcircled{3}] \textbf{Salary} (descending)
+    \item[\textcircled{4}] \textbf{Name} (alphabetically)
+\end{enumerate}
+\hfill\end{p}
+
+
+\begin{p}
+You are given $N$ activities, each with a start time $S_i$ and an end time $E_i$. However, each activity can have an overlapping penalty $P_i$ (if scheduled alongside another overlapping activity). Modify the classic activity selection problem to minimize total penalty while maximizing the number of activities selected.
+
+\begin{itemize}
+    \item \textbf{Input:} List of activities with $S_i, E_i, P_i$
+    \item \textbf{Output:} Maximum number of activities with the minimum penalty.
+\end{itemize}
+
+\textbf{Constraints:} 
+\[
+1 \leq N \leq 10^5, \quad 1 \leq S_i, E_i, P_i \leq 10^9
+\]
+\hfill\end{p}
+
+\begin{p}
+A company releases a series of $n$ collectible cards. Every time a customer buys a pack, they receive a single random card (each card is equally likely). Find the expected number of purchases required to collect all $n$ cards.
+\hfill\end{p}
+
+\begin{p}
+A gambler starts with ``dollar A'' and repeatedly bets ``dollar 1'' on a fair coin flip. If they win, they gain ``dollar 1''; if they lose, they lose ``dollar 1''. The game stops when they reach ``dollar B'' or lose everything (0). 
+
+Find the expected number of bets until the game ends.
+\hfill\end{p}
+
+\begin{p}
+In an attempt to improve the efficiency of standard \textbf{matrix multiplication}, a new approach is proposed:
+
+Instead of performing \textbf{direct multiplication} using three nested loops (which takes $O(n^3)$ time), the given $n \times n$ matrices $A$ and $B$ are divided into four equal submatrices as follows:
+
+\[
+A =
+\begin{bmatrix}
+A_{11} & A_{12} \\
+A_{21} & A_{22}
+\end{bmatrix}
+\]
+
+\[
+B =
+\begin{bmatrix}
+B_{11} & B_{12} \\
+B_{21} & B_{22}
+\end{bmatrix}
+\]
+
+The result matrix $C$ is also structured similarly:
+
+\[
+C =
+\begin{bmatrix}
+C_{11} & C_{12} \\
+C_{21} & C_{22}
+\end{bmatrix}
+\]
+
+The multiplication is then performed recursively using the formula:
+
+\[
+C_{11} = A_{11} B_{11} + A_{12} B_{21}
+\]
+
+\[
+C_{12} = A_{11} B_{12} + A_{12} B_{22}
+\]
+
+\[
+C_{21} = A_{21} B_{11} + A_{22} B_{21}
+\]
+
+\[
+C_{22} = A_{21} B_{12} + A_{22} B_{22}
+\]
+
+Since each recursive step \textbf{operates on smaller submatrices} of size $n/2 \times n/2$, this seems like an improved approach that \textbf{leverages recursion} to break down matrix multiplication, potentially making it faster than the traditional $O(n^3)$ schoolbook algorithm.
+
+\textbf{Tasks:}
+
+\begin{enumerate}
+    \item Compare this approach to the standard \textbf{schoolbook matrix multiplication} algorithm. Does this method actually improve performance?
+    \item Provide \textbf{complexity analysis} for this approach.
+    \item Can you suggest some modifications or an approach to \textbf{make it do better} than this?
+    \item Would \textbf{parallelizing} this method across \textbf{multiple GPUs} lead to better performance?
+\end{enumerate}
+\hfill\end{p}
+
+\begin{p}
+You are given a \textbf{dataset containing 500GB} of unsorted \textbf{transaction records}, but your system has only \textbf{8GB of RAM} available for processing. Since the dataset is too large to fit into memory at once, a straightforward in-memory sorting approach is not feasible. Devise a plan to \textbf{efficiently sort} this dataset while minimizing I/O operations.
+\hfill\end{p}
+
+\begin{p}
+Willy Wonka has hidden \textbf{5 Golden Tickets} inside \textbf{1,000,000} randomly distributed chocolate bars. Each bar has an \textbf{equal chance} of containing a Golden Ticket.
+
+You are a chocolate fanatic who can buy and open \textbf{one chocolate bar per day} until you find a Golden Ticket.
+
+\textbf{Tasks:}
+\begin{enumerate}
+    \item What is the \textbf{expected number} of chocolate bars you need to buy before you find a \textbf{Golden Ticket}?
+    \item What if \textbf{you and your friend both start buying bars separately}—what is the expected number of bars before at least one of you finds a ticket?
+    \item If \textbf{100,000 people} start buying chocolate bars at the same time, how many are expected to find a ticket before all five are discovered?
+\end{enumerate}
+\hfill\end{p}
+
+\begin{p}
+You decide to use \textbf{Bucket Sort} to sort an array of \textit{n} floating-point numbers, which are supposed to be \textbf{uniformly distributed} in the range \([0, 1]\).
+
+However, something \textbf{unexpected happens}—instead of spreading across multiple buckets, \textbf{every single element ends up in just one bucket}!
+
+\textbf{Tasks:}
+\begin{enumerate}
+    \item What happens to the sorting process when all elements fall into a \textbf{single bucket}?
+    \item What is the \textbf{worst-case time complexity} of Bucket Sort in this scenario?
+    \item How can you \textbf{modify} the algorithm to prevent this worst-case scenario?
+\end{enumerate}
+\hfill\end{p}
+
+\begin{p}
+You have \(n\) elements to sort and \(p\) processors available. Ideally, you want each processor to handle \(O(n/p)\) elements, achieving a perfect parallel speedup.
+
+\textbf{Tasks:}
+\begin{enumerate}
+    \item Which of \textbf{linear-time sorting algorithms} is easiest to parallelize and why?
+    \item What challenges arise when distributing elements across \textbf{multiple processors}?
+    \item Can you truly achieve \(O(n/p)\) speedup, or will overheads and dependencies slow you down?
+\end{enumerate}
+\hfill\end{p}
+
+\begin{p}
+You are given an \textbf{unsorted array of n integers} and a number \(k\). Your task is to find the \textbf{kth largest element} in the array. However, you \textbf{cannot sort} the entire array because it would be too slow for large datasets. Instead, you must find a way to solve the problem efficiently using a \textbf{Min-Heap}.
+\hfill\end{p}
+
+\begin{p}
+Solve the recurrence relation: \( T(n) = 3T(n/2) + 4T(n/4) + O(n \log n) \) using any standard method to solve recursions.
+\hfill\end{p}
+
+\begin{p}
+Sorting and Space Complexity - How can you sort 100MB of data using only 1MB of space?
+\hfill\end{p}
+
+\begin{p}
+Sorting Algorithms - Why is Quicksort preferred over Merge Sort even when both have \( O(n \log n) \) average complexity?
+\hfill\end{p}
+
+\begin{p}
+Radix Sort Analysis - How does Radix Sort achieve linear time complexity? When does it fail? Why can't its complexity be lower than \( O(n \log n) \)?
+\hfill\end{p}
+
+\begin{p}
+Graph Theory - How many paths and walks are there in the given graph? Identify them.
+\begin{center}
+\begin{tikzpicture}[scale=1, roundnode/.style={circle, draw=black, inner sep=2pt, minimum size=15pt}]
+
+% Nodes
+\node[roundnode] (1) at (0, 0) {1};
+\node[roundnode] (2) at (0, 1.5) {2};
+\node[roundnode] (3) at (1.5, 0) {3};
+\node[roundnode] (4) at (1.5, 1.5) {4};
+
+% Edges
+\draw (1) -- (2);
+\draw (1) -- (3);
+\draw (2) -- (3);
+\draw (2) -- (4);
+
+\end{tikzpicture}
+\end{center}
+\hfill\end{p}
+
+\begin{p}
+Graph Connectivity Check - Given an adjacency list, write a BFS algorithm to determine whether a graph is strongly connected or weakly connected.
+\hfill\end{p}
+
+
+\end{document}
+
+
+
+
+
+
 
 \end{document}
