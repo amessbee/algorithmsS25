@@ -170,13 +170,6 @@ Order according to increasing asymptotic growth - provide one line reason for ea
 \hfill \end{p}
 
 \begin{p}
-Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
-\[
-2^{3n},3^{2n},n!,2^{\log^*n},\log^* 2^{2n}
-\]
-\hfill \end{p}
-
-\begin{p}
 Give runtime complexity of the following algorithm.
 \begin{algorithm}[!ht]
 	\label{algo1}
@@ -296,15 +289,6 @@ Given an $n$ bit integer, write an efficient algorithm to return the square of $
 Suppose you are given a ``black box'' linear-time median finding algorithm. Design a simple linear-time algorithm to find $k^{th}$ smallest element using this algorithm. Note that median finding algorithm that you are given is black-box and you can't change it in anyway; you can just call it to find median of a list in linear-time.
 \hfill \end{p}
 
-\begin{p}
-Solve recurrences.
-\hfill \end{p}
-\begin{itemize}
-			\item $T(n) = 8T(n/3) + n$
-			\item $T(n) = 2T(n/2) + n^{0.5}$
-			\item $T(n) = 3T(n/4) + n\log n$
-			\item $T(n) = T(n-2) + n^2$
-\end{itemize} 
 
 \begin{p}
 Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
@@ -355,7 +339,7 @@ Give runtime complexity of the following algorithm.
 	\begin{algorithmic}
 		\Procedure{Algo1}{$x$} \Comment{input $x$ is a number}
 		\If{$|x| > 2$}
-		\State \textbf{return} ALGO1($\sqrt{x}$)
+		\State \textbf{return} ALGO1($\log{x}$)
 		\Else
 		\State \textbf{return} $x$
 		\EndIf
@@ -817,14 +801,6 @@ Run SCC Algorithm on the following graph. Show the DFS tree and finish times for
 \begin{p}
 Run Kruskal/Prim's Algorithm on the following graph. Show the MST and the order in which edges are added.
 \hfill\end{p}
-
-
-\end{document}
-
-
-
-
-
 
 
 \end{document}
