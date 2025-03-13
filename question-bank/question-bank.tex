@@ -108,67 +108,7 @@ Question Bank: Analysis of Algorithms\\Dr. Mudassir Shabbir,
 \pagenumbering{gobble}
 \rule{500pt}{1.5pt}
 
-\begin{p}
-Let us consider the random experiment of rolling two dice.
-\hfill \end{p}
-\begin{enumerate}
-    \item Define a random variable \(X\) as the number of 6's that you get. Find the expected value of \(X\).
-    \item Define a random variable \(Y\) as the sum of the two dice. Find the expected value of \(Y\).
-\end{enumerate}
-
-\begin{p}
-Perform the analysis of Median of Median's Algorithm where we make chunks of size 9 instead of 5 and solve the recurrence using substitution method.
-\hfill \end{p}
-
-\begin{p}
-Let \( X \) be a random variable that is equal to the number of heads in two flips of a  
-fair coin. What is \( E(X^2) \)? What is \( (E(X))^2 \)?
-\hfill \end{p}
-
-\begin{p}
-Apply the algorithm step by step to find the articulation points in the following graphs:
-\end{p}
-
-\begin{center}
-\begin{tikzpicture}[scale=1, every node/.style={draw, circle, inner sep=2pt}]
-    \node (1) at (0, 2) {1};
-    \node (2) at (2, 2) {2};
-    \node (3) at (4, 2) {3};
-    \node (4) at (1, 0) {4};
-
-    \draw (1) -- (2);
-    \draw (2) -- (3);
-    \draw (4) -- (2);
-    \draw (1) -- (4);
-\end{tikzpicture}
-\end{center}
-%\vfill
-\ifanswers
-{\bf SOL:}  $B\wedge (C\to A)$
-\vfill
-\fi
-
-%\vfill
-\ifanswers
-{\bf SOL:}  $B\wedge (C\to A)$
-\vfill
-\fi
-\begin{center}
-\begin{tikzpicture}[scale=1, every node/.style={draw, circle, inner sep=2pt}]
-    \node (1) at (0, 2) {1};
-    \node (2) at (2, 2) {2};
-    \node (3) at (4, 2) {3};
-    \node (4) at (1, 0) {4};
-    \node (5) at (3, 0) {5};
-    \node (6) at (5, 0) {6};
-
-    \draw (1) -- (2);
-    \draw (2) -- (3);
-    \draw (2) -- (4);
-    \draw (3) -- (5);
-    \draw (5) -- (6);
-\end{tikzpicture}
-\end{center}
+% ===== SECTION: RECURRENCE RELATIONS AND ASYMPTOTIC ANALYSIS =====
 
 \begin{p}
 Solve the following recurrence relations:\\
@@ -179,6 +119,116 @@ Solve the following recurrence relations:\\
 \textbf{d.} \( T(n) = 2T(n-1) + 1 \)\\
 \textbf{e.} \( T(n) = T(\sqrt{n}) + 1 \)\\
 \hfill \end{p}
+
+\begin{p}
+Solve recurrences.
+\hfill \end{p}
+\begin{itemize}
+			\item $T(n) = 8T(n/3) + n$
+			\item $T(n) = 2T(n/2) + n^{0.5}$
+			\item $T(n) = 3T(n/4) + n\log n$
+			\item $T(n) = T(n-2) + n^2$
+\end{itemize} 
+
+\begin{p}
+Solve recurrences.
+\hfill \end{p}
+\begin{itemize}
+			\item $T(n) = 8T(n/4) + n^{1.5}$
+			\item $T(n) = 3^nT(n/2) + n^{0.5}$
+\end{itemize}
+
+\begin{p}
+Use the recursion tree method to solve \(T(n) = 3T(n/4) + 5n^2\). Draw or describe the cost at each level of recursion and sum it up to find the total asymptotic cost. What is the Big-\(\Theta\) solution for \(T(n)\)?  
+\hfill\end{p}
+
+\begin{p}
+The Tower of Hanoi puzzle satisfies the recurrence \(T(n) = 2T(n-1) + 1\) with base \(T(1) = 1\). Use the substitution method (induction) to solve this recurrence and find a closed-form solution for \(T(n)\).  
+\hfill\end{p}
+
+\begin{p}
+Recurrence with Log Factor: Solve the recurrence \(T(n) = 2T(n/2) + n \log^2 n\). Which method or case of the Master Theorem is appropriate here, and why?  
+\hfill\end{p}
+
+\begin{p}
+Unbalanced Divide-and-Conquer (Quicksort Average-case): Consider the recurrence \(T(n) = T(n/3) + T(2n/3) + O(n)\), which arises from the average-case of QuickSort. Explain how you would solve this recurrence – for instance, by using a recursion tree or the more general Akra-Bazzi theorem (subproblem sizes are uneven) – and give the Big-O solution.  
+\hfill\end{p}
+
+\begin{p}
+Strassen's Algorithm: The Strassen matrix multiplication algorithm follows the recurrence \(T(n) = 7T(n/2) + O(n^2)\). Use the Master Theorem to determine the time complexity of this algorithm.  
+\hfill\end{p}
+
+\begin{p}
+Solve the recurrence relation: \( T(n) = 3T(n/2) + 4T(n/4) + O(n \log n) \) using any standard method to solve recursions.
+\hfill\end{p}
+
+\begin{p}
+Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
+\[
+2^{3n},3^{2n},n!,2^{\log^*n},\log^* 2^{2n}
+\]
+\hfill \end{p}
+
+\begin{p}
+Order according to increasing asymptotic growth - provide one line reason for each consecutive pair.
+\[
+2^{3n},3^{2n},n!,2^{\log^*n},\log^* 2^{2n}
+\]
+\hfill \end{p}
+
+\begin{p}
+Give runtime complexity of the following algorithm.
+\begin{algorithm}[!ht]
+	\label{algo1}
+	\begin{algorithmic}
+		\Procedure{Algo1}{$x$} \Comment{input $x$ is a number}
+		\If{$|x| > 2$}
+		\State \textbf{return} ALGO1($\sqrt{x}$)
+		\Else
+		\State \textbf{return} $x$
+		\EndIf
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+\hfill \end{p}
+
+% ===== SECTION: PROBABILITY AND EXPECTATION =====
+
+\begin{p}
+Let us consider the random experiment of rolling two dice.
+\hfill \end{p}
+\begin{enumerate}
+    \item Define a random variable \(X\) as the number of 6's that you get. Find the expected value of \(X\).
+    \item Define a random variable \(Y\) as the sum of the two dice. Find the expected value of \(Y\).
+\end{enumerate}
+
+\begin{p}
+Let \( X \) be a random variable that is equal to the number of heads in two flips of a  
+fair coin. What is \( E(X^2) \)? What is \( (E(X))^2 \)?
+\hfill \end{p}
+
+\begin{p}
+A company releases a series of $n$ collectible cards. Every time a customer buys a pack, they receive a single random card (each card is equally likely). Find the expected number of purchases required to collect all $n$ cards.
+\hfill\end{p}
+
+\begin{p}
+A gambler starts with ``dollar A'' and repeatedly bets ``dollar 1'' on a fair coin flip. If they win, they gain ``dollar 1''; if they lose, they lose ``dollar 1''. The game stops when they reach ``dollar B'' or lose everything (0). 
+
+Find the expected number of bets until the game ends.
+\hfill\end{p}
+
+\begin{p}
+Willy Wonka has hidden \textbf{5 Golden Tickets} inside \textbf{1,000,000} randomly distributed chocolate bars. Each bar has an \textbf{equal chance} of containing a Golden Ticket.
+
+You are a chocolate fanatic who can buy and open \textbf{one chocolate bar per day} until you find a Golden Ticket.
+
+\textbf{Tasks:}
+\begin{enumerate}
+    \item What is the \textbf{expected number} of chocolate bars you need to buy before you find a \textbf{Golden Ticket}?
+    \item What if \textbf{you and your friend both start buying bars separately}—what is the expected number of bars before at least one of you finds a ticket?
+    \item If \textbf{100,000 people} start buying chocolate bars at the same time, how many are expected to find a ticket before all five are discovered?
+\end{enumerate}
+\hfill\end{p}
 
 \begin{p}
 An array \( A[1 \dots n] \) is said to have a \textbf{majority element} if more than half of its entries are the same. Given an array, the task is to design an efficient algorithm to determine whether the array has a majority element, and, if so, to find that element. The elements of the array are not necessarily from some ordered domain like the integers, so comparisons of the form “is \( A[i] > A[j]? \)” are not allowed. (Think of the array elements as GIF files, for instance.) However, you can answer questions of the form: “is \( A[i] = A[j]? \)” in constant time.\\
