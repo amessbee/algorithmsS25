@@ -11,6 +11,7 @@ def generate_random_graph(n, edge_density=0.3):
     Generate a random graph with n vertices and approximately edge_density * n*(n-1)/2 edges.
     Returns a list of edges in the format (u, v, weight).
     """
+    edge_density = 20/n
     max_edges = n * (n - 1) // 2
     num_edges = int(max_edges * edge_density)
     
@@ -138,7 +139,7 @@ def theoretical_complexity(sizes):
 
 if __name__ == "__main__":
     # Define the sizes of graphs to test
-    sizes = [100, 200, 400, 600, 800, 1000, 1500, 2000]
+    sizes = [100, 200, 400, 1000, 2000]
     
     # Measure performance
     prim_times, kruskal_times = measure_performance(sizes)
