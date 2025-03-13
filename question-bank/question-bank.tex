@@ -677,6 +677,81 @@ Graph Connectivity Check - Given an adjacency list, write a BFS algorithm to det
 \hfill\end{p}
 
 
+\begin{p}
+How can number of strongly connected components change if an edge is removed?
+\hfill\end{p}
+
+\begin{p}
+Design an algorithm to find all biconnected components in an undirected graph.
+\hfill\end{p}
+
+\begin{p}
+
+Design an efficient algorithm to find the second-best minimum spanning tree of a given graph.
+\hfill\end{p}
+
+\begin{p}
+
+Find a spanning tree T of a graph G such that the maximum edge weight in T is minimized.
+\hfill\end{p}
+
+\begin{p}
+
+Bipartite Graph Verification: Given an undirected graph, determine if it can be divided into
+two sets such that no vertices within the same set are adjacent. Implement using either BFS or DFS.
+\hfill\end{p}
+
+\begin{p}
+You have \( n \) courses and a list of prerequisite pairs \((a, b)\), meaning ``course \(a\) must be taken before course \(b\).'' Model this as a directed graph and use topological sort to determine whether you can finish all courses and, if yes, in which order.
+If multiple valid schedules are possible, how could you modify your approach to find \emph{all} possible topological sorts?
+\hfill\end{p}
+
+\begin{p}
+Similar to articulation points, a \emph{bridge} (or cut edge) is an edge whose removal increases the number of connected components. Provide an \(O(n + m)\) algorithm to identify all bridges in an undirected graph. Show how the DFS tree can be used to detect these edges.
+\hfill\end{p}
+
+\begin{p}
+
+How do you check if the Minimum Spanning Tree of a given weighted, connected graph is \emph{unique}? State and justify a procedure that uses MST properties to determine whether multiple MSTs of the same total weight could exist.
+\hfill\end{p}
+
+\begin{p}
+
+Given a DAG \( G = (V, E) \) with integer edge lengths, describe an \(O(n + m)\) algorithm to find the length of the \emph{longest path} in \( G \).
+\hfill\end{p}
+
+\begin{p}
+Run QuickSort/Median of Medians Algorithm on the following input. Show the array after each partition step.
+\[
+\begin{array}{cccccc}
+    3 & 8 & 2 & 5 & 1 & 4
+\end{array}
+\]
+\hfill\end{p}
+
+\begin{p}
+Run SCC Algorithm on the following graph. Show the DFS tree and finish times for each vertex.
+\begin{center}
+\begin{tikzpicture}[scale=1, roundnode/.style={circle, draw=black, inner sep=2pt, minimum size=15pt}]
+% Nodes
+\node[roundnode] (1) at (0, 0) {1};
+\node[roundnode] (2) at (0, 1.5) {2};
+\node[roundnode] (3) at (1.5, 0) {3};
+\node[roundnode] (4) at (1.5, 1.5) {4};
+% Edges
+\draw (1) -- (2);
+\draw (1) -- (3);
+\draw (2) -- (3);
+\draw (2) -- (4);
+\end{tikzpicture}
+\end{center}
+\hfill\end{p}
+
+\begin{p}
+Run Kruskal/Prim's Algorithm on the following graph. Show the MST and the order in which edges are added.
+\hfill\end{p}
+
+
 \end{document}
 
 
