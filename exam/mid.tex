@@ -1,0 +1,236 @@
+% -*- program: xelatex -*-
+
+\newif\ifanswers
+%\answerstrue
+
+% Dr Driver's standard reading quiz
+% Source: https://gist.github.com/danieldriver/90a73c4d3c72dd837e39#file-quiz-tex 
+\documentclass[%
+% 11pt,
+% answers,
+addpoints]{exam}
+\usepackage{enumitem}
+ % Add to the preamble section (before \begin{document})
+\usepackage{tkz-graph}
+\pagestyle{head}
+
+\usepackage{amssymb,amsmath,amsfonts,amsthm,graphicx}
+
+\usepackage[top=0.3in, bottom=0.75in, left=0.5in, right=0.5in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+
+
+\DeclareGraphicsExtensions{.pdf}
+%\centerline {\includegraphics[width=3in]{PICTURE}}
+
+
+
+\newtheoremstyle{problem}{\topsep}{\topsep}%%% space between body and thm
+		{}                      %%% Thm body font
+		{}                              %%% Indent amount (empty = no indent)
+		{\bfseries}            %%% Thm head font
+		{}                    %%% Punctuation after thm head
+		{ }                           %%% Space after thm head
+		{\thmnumber{#2}\thmnote{ \bfseries (#3)}}%%% Thm head spec
+\theoremstyle{problem}
+\newtheorem{p}{}
+
+\firstpageheader{% left
+	CS \liningnums{3250}: Algorithms --- Asymptotic Practice Problems \\
+	Husnain Haider, 4 September 2023
+}{% center - blank
+}{% right
+	Full name1:\enspace\makebox[2in]{\hrulefill}\\
+	Full name2:\enspace\makebox[2in]{\hrulefill}\\
+}
+\runningheader{}{}{}
+% For double-sided quizzes
+% \pagestyle{headandfoot}
+% \footer{}{\thepage}{}
+
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+ 
+% Typography and layout
+\usepackage{fontspec,realscripts}
+\defaultfontfeatures{Ligatures=TeX}
+%\setmainfont{Meta Serif Pro}
+%\setsansfont{Meta Pro}
+\frenchspacing
+% - print solutions in sans serif
+\unframedsolutions
+\SolutionEmphasis{\sffamily}
+\renewcommand{\solutiontitle}{}
+% - box points & center in the right margin w/ custom setup@point@toks
+\boxedpoints
+\pointsinrightmargin
+\marginbonuspointname{\textsc{up}}
+\makeatletter% rewrite setup@point@toks assuming right margins
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}% define \clap as per https://www.tug.org/TUGboat/tb22-4/tb72perlS.pdf
+\def\setup@point@toks{%
+	\point@toks={%
+		\rlap{\hskip-\@totalleftmargin
+			  \hskip\textwidth
+			  \hskip\@rightmargin
+			  \hskip-\rightpointsmargin
+			  \clap{\padded@point@block}% change \llap to \clap
+		}%
+		\global \point@toks={}%
+	}%
+}% end setup@point@toks
+\setlength{\rightpointsmargin}{.5in}% assuming the default 1" margins
+\makeatother
+% - adjust the top and bottom margins
+\extraheadheight{.25in}
+\extrafootheight{-.5in}
+\setlength{\marginparwidth}{1.5in}
+% NB: remember to use \newpage after the last question
+\usepackage{xcolor}
+\usepackage{pagecolor}
+
+%\pagecolor{black}
+%\color{white}
+
+\usepackage[document]{ragged2e}
+\begin{document}
+
+ \pagestyle{empty}
+ \begin{FlushLeft}
+Question Bank: Analysis of Algorithms\\Dr. Mudassir Shabbir,
+\today
+\end{FlushLeft}
+
+	
+\thispagestyle{myheadings}
+\pagenumbering{gobble}
+\rule{550pt}{1.5pt}
+
+The exam consists of a total of 100 points, and you have 180 minutes. Make sure to write your roll-number and name on the question paper AND answersheet. 
+\textbf{The solution to every question must start on a new page and complete answer to each question (all parts!) on a single page. 
+Anything written beyond first ten pages of your answersheet will not be graded!}
+
+\rule{550pt}{1.5pt}
+
+\begin{p}
+    {\bf Priority Queues}
+    \begin{enumerate}
+        \item Give an \( O(n \log k) \)-time algorithm to merge \( k \) sorted lists into one sorted list, where \( n \) is the total number of elements in all the input lists. (Hint: Use a min-heap for \( k \)-way merging.)
+        \item Where in a max-heap might the smallest element reside, assuming that all elements are distinct?
+    \end{enumerate}
+    \hfill
+\end{p}
+
+\begin{p}
+    {\bf Union-Find}
+    \begin{enumerate}
+        \item Prove that the height of a union-find data structure with path compression is at most $\log n$, i.e., $H(UF) \leq \log n$.  
+        \item Consider the following sequence of Union-Find operations on elements \{1,2,3,4,5,6\}. Show the forest structure after each operation, assuming both path compression and union by rank are used. In the start, all elements are in their own set.
+    \begin{enumerate}
+        \item Union(1,2)
+        \item Union(3,4)
+        \item Union(5,6)
+        \item Find(4)
+        \item Union(2,3)
+        \item Find(6)
+        \item Union(1,5)
+        \item Find(6)
+    \end{enumerate}
+\end{enumerate}  
+\hfill
+\end{p}
+
+\begin{p}
+    Let us consider the random experiment of rolling two dice.
+
+    \begin{enumerate}
+        \item Define a random variable \(X\) as the number of 6's that you get. Find the expected value of \(X\).
+        \item Define a random variable \(Y\) as the sum of the two dice. Find the expected value of \(Y\).
+\end{enumerate}
+\hfill 
+\end{p}
+
+
+\begin{p}
+    {\bf Articulation Points}
+\begin{enumerate}
+    \item Similar to articulation points, a \emph{bridge} (or cut edge) is an edge whose removal increases the number of connected components. 
+    Provide an \(O(V + E)\) algorithm to identify all bridges in an undirected graph. Show how the DFS tree can be used to detect these edges.
+    \item For the following undirected graph on eight vertices, find all articulation points using the algorithm discussed in the class. Show the
+    discovery time and low value for the whole graph each time an articulation point is found.
+    \begin{figure}[!ht]
+        \centering
+        \begin{tikzpicture}
+            \GraphInit[vstyle=Normal]
+            \SetGraphUnit{2}
+            \Vertices{circle}{A,B,C,D,E,F,G,H,I}
+            \Edges(A,B,C,D,E,F,G,H,A)
+            \Edges(A,C)
+            \Edges(B,D)
+            \Edges(C,D)
+            \Edges(D,E)
+            \Edges(E,F)
+            \Edges(F,G)
+            \Edges(G,H)
+            \Edges(H,E)
+            \Edges(E,I)
+        \end{tikzpicture}
+    \end{figure}
+\end{enumerate}
+       
+\hfill  
+\end{p}
+
+
+\begin{p}
+    Suppose you are given a ``black box'' linear-time median finding algorithm. Design a simple linear-time algorithm to find $k^{th}$ smallest element using this algorithm. Note that median finding algorithm that you are given is black-box and you can't change it in anyway; you can just call it to find median of a list in linear-time.
+\hfill 
+\end{p}
+
+\begin{p} 
+    How can the number of strongly connected components of a graph on $n$ vertices change if a new edge is added? Give the extreme cases where it changes 
+    drastically.
+\hfill  
+\end{p}
+    
+
+\begin{p} 
+    Counting sort can also work efficiently if the input values have fractional parts, but the number of digits in the fractional part is small. Suppose that you are given \( n \) numbers in the range \( 0 \) to \( k \), each with at most \( d \) decimal (base 10) digits to the right of the decimal point. Modify counting sort to run in \( \Theta(n + 10^d k) \) time.  
+\hfill  
+\end{p}
+
+
+\begin{p}
+    You are given a \textbf{dataset containing 500GB} of unsorted \textbf{transaction records}, but your system has only \textbf{8GB of RAM} available for processing. Since the dataset is too large to fit into memory at once, a straightforward in-memory sorting approach is not feasible. Devise a plan to \textbf{efficiently sort} this dataset while minimizing I/O operations.
+\hfill
+\end{p}
+
+
+\begin{p}
+    Strassen's Algorithm: The Strassen matrix multiplication algorithm follows the recurrence \(T(n) = 7T(n/2) + O(n^2)\). Use the Master Theorem to determine the time complexity of this algorithm.  
+\hfill
+\end{p}
+
+\begin{p}
+    Give runtime complexity of the following algorithm.
+    \begin{algorithm}[!h]
+        \label{algo1}
+        \begin{algorithmic}
+            \Procedure{Algo1}{$x$} \Comment{input $x$ is a number}
+            \If{$|x| > 2$}
+            \State \textbf{return} ALGO1($\sqrt{x}$)
+            \Else
+            \State \textbf{return} $x$
+            \EndIf
+            \EndProcedure
+        \end{algorithmic}
+    \end{algorithm}
+\hfill 
+\end{p}
+
+
+
+\end{document}
