@@ -1,0 +1,307 @@
+% Dynamic Programming Problem Statements
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[margin=0.75in]{geometry}  % Sets all margins to 0.75 inches
+
+\newtheorem{problem}{Problem}
+
+\begin{document}
+\title{Dynamic Programming Problem Statements}
+\author{Mudassir Shabbir}
+\maketitle
+
+% Dynamic Programming Problem Statements
+
+% 1. Longest Common Subsequence
+\subsection*{1. Longest Common Subsequence}
+\begin{problem}
+Given two sequences $X = \{x_1, x_2, \ldots, x_m\}$ and $Y = \{y_1, y_2, \ldots, y_n\}$, find the length of the longest subsequence present in both of them. A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+
+\textbf{Input:} Two sequences $X$ and $Y$.
+
+\textbf{Output:} The length of the longest common subsequence.
+
+\textbf{Recurrence Relation:}
+\[
+LCS[i][j] = 
+\begin{cases}
+0, & \text{if } i = 0 \text{ or } j = 0 \\
+LCS[i-1][j-1] + 1, & \text{if } x_i = y_j \\
+\max(LCS[i-1][j], LCS[i][j-1]), & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $X = \text{"ABCBDAB"}$, $Y = \text{"BDCABA"}$ \\
+      Output: 4 (The LCS is "BCBA")
+\item Input: $X = \text{"AGGTAB"}$, $Y = \text{"GXTXAYB"}$ \\
+      Output: 4 (The LCS is "GTAB")
+\item Input: $X = \text{"ABCD"}$, $Y = \text{"ACBAD"}$ \\
+      Output: 3 (The LCS is "ABD" or "ACD")
+\end{enumerate}
+\end{problem}
+
+% 2. Knapsack Problem
+\subsection*{2. Knapsack Problem}
+\begin{problem}
+Given a set of $n$ items, each with a weight $w_i$ and a value $v_i$, determine the number of each item to include in a collection so that the total weight is less than or equal to a given capacity $W$ and the total value is as large as possible.
+
+\textbf{Input:} Weights $w_1, w_2, \ldots, w_n$, values $v_1, v_2, \ldots, v_n$, and capacity $W$.
+
+\textbf{Output:} Maximum value that can be obtained without exceeding the capacity.
+
+\textbf{Recurrence Relation:}
+\[
+DP[i][w] = 
+\begin{cases}
+0, & \text{if } i = 0 \text{ or } w = 0 \\
+DP[i-1][w], & \text{if } w_i > w \\
+\max(DP[i-1][w], DP[i-1][w-w_i] + v_i), & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $n = 3$, $W = 50$, $w = [10, 20, 30]$, $v = [60, 100, 120]$ \\
+      Output: 220 (Take items with values 100 and 120)
+\item Input: $n = 4$, $W = 7$, $w = [1, 3, 4, 5]$, $v = [1, 4, 5, 7]$ \\
+      Output: 9 (Take items with values 1, 1, and 7)
+\item Input: $n = 5$, $W = 10$, $w = [2, 3, 4, 5, 9]$, $v = [3, 4, 5, 8, 10]$ \\
+      Output: 13 (Take items with values 5 and 8)
+\end{enumerate}
+\end{problem}
+
+% 3. Matrix Chain Multiplication
+\subsection*{3. Matrix Chain Multiplication}
+\begin{problem}
+Given a sequence of matrices $A_1, A_2, \ldots, A_n$, find the most efficient way to multiply these matrices together such that the number of scalar multiplications is minimized. The problem is not to actually perform the multiplications, but merely to decide in which order to perform the multiplications.
+
+\textbf{Input:} Dimensions of matrices $p_0, p_1, \ldots, p_n$ where matrix $A_i$ has dimensions $p_{i-1} \times p_i$.
+
+\textbf{Output:} Minimum number of scalar multiplications needed.
+
+\textbf{Recurrence Relation:}
+\[
+DP[i][j] = 
+\begin{cases}
+0, & \text{if } i = j \\
+\min_{i \leq k < j} \{DP[i][k] + DP[k+1][j] + p_{i-1} \cdot p_k \cdot p_j\}, & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $p = [10, 30, 5, 60]$ (Representing matrices of dimensions $10 \times 30$, $30 \times 5$, and $5 \times 60$) \\
+      Output: 4500 (Optimal ordering: $(A_1 \times A_2) \times A_3$)
+\item Input: $p = [5, 10, 3, 12, 5, 50, 6]$ \\
+      Output: 2010 (Optimal ordering involves careful parenthesization)
+\item Input: $p = [30, 35, 15, 5, 10, 20, 25]$ \\
+      Output: 15125 (Optimal ordering involves careful parenthesization)
+\end{enumerate}
+\end{problem}
+
+% 4. Edit Distance
+\subsection*{4. Edit Distance}
+\begin{problem}
+Given two strings $s1$ and $s2$, find the minimum number of operations required to convert $s1$ to $s2$. The allowed operations are: insertion, deletion, and substitution of a character.
+
+\textbf{Input:} Two strings $s1$ and $s2$.
+
+\textbf{Output:} Minimum number of operations required.
+
+\textbf{Recurrence Relation:}
+\[
+ED[i][j] = 
+\begin{cases}
+i, & \text{if } j = 0 \\
+j, & \text{if } i = 0 \\
+ED[i-1][j-1], & \text{if } s1[i-1] = s2[j-1] \\
+1 + \min(ED[i-1][j], ED[i][j-1], ED[i-1][j-1]), & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $s1 = \text{"kitten"}$, $s2 = \text{"sitting"}$ \\
+      Output: 3 (Replace 'k' with 's', replace 'e' with 'i', insert 'g')
+\item Input: $s1 = \text{"sunday"}$, $s2 = \text{"saturday"}$ \\
+      Output: 3 (Insert 'a', insert 't', insert 'r')
+\item Input: $s1 = \text{"algorithm"}$, $s2 = \text{"logarithm"}$ \\
+      Output: 6 (Several operations needed to transform)
+\end{enumerate}
+\end{problem}
+
+% 5. Longest Increasing Subsequence
+\subsection*{5. Longest Increasing Subsequence}
+\begin{problem}
+Given an array of integers, find the length of the longest subsequence such that all elements of the subsequence are sorted in strictly increasing order.
+
+\textbf{Input:} An array $A$ of integers.
+
+\textbf{Output:} Length of the longest increasing subsequence.
+
+\textbf{Recurrence Relation:}
+\[
+LIS[i] = 1 + \max_{j < i, A[j] < A[i]} \{LIS[j]\}
+\]
+If there is no $j$ such that $j < i$ and $A[j] < A[i]$, then $LIS[i] = 1$.
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $A = [10, 22, 9, 33, 21, 50, 41, 60]$ \\
+      Output: 5 (The LIS is $[10, 22, 33, 50, 60]$ or $[10, 22, 33, 41, 60]$)
+\item Input: $A = [3, 10, 2, 1, 20]$ \\
+      Output: 3 (The LIS is $[3, 10, 20]$)
+\item Input: $A = [50, 3, 10, 7, 40, 80]$ \\
+      Output: 4 (The LIS is $[3, 7, 40, 80]$)
+\end{enumerate}
+\end{problem}
+
+% 6. Coin Change
+\subsection*{6. Coin Change}
+\begin{problem}
+Given a set of denominations of coins and a target amount, find the number of ways to make change for the target amount using the given coins. Each coin can be used an unlimited number of times.
+
+\textbf{Input:} An array of coin denominations $coins$ and a target amount $amount$.
+
+\textbf{Output:} Number of ways to make change.
+
+\textbf{Recurrence Relation:}
+\[
+DP[i][j] = 
+\begin{cases}
+1, & \text{if } j = 0 \\
+0, & \text{if } i = 0 \text{ and } j > 0 \\
+DP[i-1][j], & \text{if } coins[i] > j \\
+DP[i-1][j] + DP[i][j-coins[i]], & \text{otherwise}
+\end{cases}
+\]
+where $DP[i][j]$ represents the number of ways to make change for amount $j$ using the first $i$ coins.
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $coins = [1, 2, 5]$, $amount = 5$ \\
+      Output: 4 (The ways are: $[1,1,1,1,1]$, $[1,1,1,2]$, $[1,2,2]$, $[5]$)
+\item Input: $coins = [2, 5, 3, 6]$, $amount = 10$ \\
+      Output: 5 (The ways are: $[2,2,2,2,2]$, $[2,2,3,3]$, $[2,2,6]$, $[2,3,5]$, $[5,5]$)
+\item Input: $coins = [1, 2, 3]$, $amount = 4$ \\
+      Output: 4 (The ways are: $[1,1,1,1]$, $[1,1,2]$, $[1,3]$, $[2,2]$)
+\end{enumerate}
+\end{problem}
+
+% 7. Rod Cutting
+\subsection*{7. Rod Cutting}
+\begin{problem}
+Given a rod of length $n$ and an array of prices $price$ that contains prices of all pieces of size smaller than $n$, determine the maximum value obtainable by cutting up the rod and selling the pieces.
+
+\textbf{Input:} Length of rod $n$ and array of prices $price$ where $price[i]$ is the price of a rod of length $i$.
+
+\textbf{Output:} Maximum obtainable value.
+
+\textbf{Recurrence Relation:}
+\[
+DP[j] = \max_{1 \leq i \leq j} \{price[i] + DP[j-i]\}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $n = 8$, $price = [1, 5, 8, 9, 10, 17, 17, 20]$ \\
+      Output: 22 (Cut into rods of lengths 2 and 6 for prices 5 and 17)
+\item Input: $n = 8$, $price = [3, 5, 8, 9, 10, 17, 17, 20]$ \\
+      Output: 24 (Cut into rods of length 1, 2, and 5 for prices 3, 5, and 17)
+\item Input: $n = 4$, $price = [2, 5, 7, 8]$ \\
+      Output: 10 (Cut into rods of length 2 and 2 for prices 5 and 5)
+\end{enumerate}
+\end{problem}
+
+% 8. Palindrome Partitioning
+\subsection*{8. Palindrome Partitioning}
+\begin{problem}
+Given a string $s$, partition $s$ such that every substring of the partition is a palindrome. Return the minimum number of cuts needed for a palindrome partitioning.
+
+\textbf{Input:} A string $s$.
+
+\textbf{Output:} Minimum number of cuts.
+
+\textbf{Recurrence Relation:}
+\[
+DP[i][j] = 
+\begin{cases}
+0, & \text{if } i \geq j \text{ or substring } s[i...j] \text{ is a palindrome} \\
+\min_{i \leq k < j} \{1 + DP[i][k] + DP[k+1][j]\}, & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $s = \text{"aab"}$ \\
+      Output: 1 (The partition is "a|a|b" or "aa|b")
+\item Input: $s = \text{"abcde"}$ \\
+      Output: 4 (The partition is "a|b|c|d|e")
+\item Input: $s = \text{"racecar"}$ \\
+      Output: 0 (The string itself is a palindrome, so no cuts needed)
+\end{enumerate}
+\end{problem}
+
+% 9. Egg Dropping Puzzle
+\subsection*{9. Egg Dropping Puzzle}
+\begin{problem}
+You are given $n$ identical eggs and a building with $k$ floors. Your task is to find the minimum number of attempts needed to determine the highest floor from which an egg can be dropped without breaking.
+
+\textbf{Input:} Number of eggs $n$ and number of floors $k$.
+
+\textbf{Output:} Minimum number of attempts in worst case.
+
+\textbf{Recurrence Relation:}
+\[
+DP[n][k] = 
+\begin{cases}
+k, & \text{if } n = 1 \\
+1, & \text{if } k = 0 \text{ or } k = 1 \\
+1 + \min_{1 \leq x \leq k} \{\max(DP[n-1][x-1], DP[n][k-x])\}, & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $n = 2$, $k = 10$ \\
+      Output: 4 (Try floors 4, 7, 9, 10 in worst case)
+\item Input: $n = 1$, $k = 5$ \\
+      Output: 5 (Need to try every floor from 1 to 5)
+\item Input: $n = 3$, $k = 14$ \\
+      Output: 4 (Try floors strategically based on previous results)
+\end{enumerate}
+\end{problem}
+
+% 10. Optimal Binary Search Tree
+\subsection*{10. Optimal Binary Search Tree}
+\begin{problem}
+Given a sorted array of keys $keys[0...n-1]$ and a corresponding array of frequencies $freq[0...n-1]$ that specifies the number of times each key occurs, construct a binary search tree such that the total cost of all searches is minimized.
+
+\textbf{Input:} Arrays $keys$ and corresponding $freq$.
+
+\textbf{Output:} Minimum cost of a binary search tree.
+
+\textbf{Recurrence Relation:}
+\[
+DP[i][j] = 
+\begin{cases}
+freq[i], & \text{if } i = j \\
+\min_{i \leq r \leq j} \{DP[i][r-1] + DP[r+1][j] + \sum_{l=i}^{j} freq[l]\}, & \text{otherwise}
+\end{cases}
+\]
+
+\textbf{Examples:}
+\begin{enumerate}
+\item Input: $keys = [10, 20, 30, 40]$, $freq = [4, 2, 6, 3]$ \\
+      Output: 26 (Optimal BST has 30 as root, 10 and 20 in left subtree, 40 in right subtree)
+\item Input: $keys = [10, 12, 16, 21]$, $freq = [4, 2, 6, 3]$ \\
+      Output: 26 (Optimal BST arrangement minimizes search cost)
+\item Input: $keys = [12, 15, 18, 24, 30]$, $freq = [8, 10, 12, 6, 2]$ \\
+      Output: 76 (Optimal BST has keys arranged to minimize total search cost)
+\end{enumerate}
+\end{problem}
+
+\end{document}
