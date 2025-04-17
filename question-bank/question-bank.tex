@@ -752,6 +752,21 @@ Run Kruskal/Prim's Algorithm on the following graph. Show the MST and the order 
 \hfill\end{p}
 
 
+\begin{p}
+    A graph \( G = (V, E) \) is \( \varepsilon \)-dense if \( |E| = \Theta(|V|^{1+\varepsilon}) \) for some constant \( \varepsilon \) in the range \( 0 < \varepsilon \leq 1 \). \( d \)-ary min-heaps (see Problem 6-2 on page 179) provide a way to match the running times of Fibonacci-heap-based shortest-path algorithms on \( \varepsilon \)-dense graphs without using as complicated a data structure.
+    
+    \begin{enumerate}
+        \item What are the asymptotic running times for the operations \textsc{Insert}, \textsc{Extract-Min}, and \textsc{Decrease-Key}, as a function of \( d \) and the number \( n \) of elements in a \( d \)-ary min-heap? What are these running times if you choose \( d = \Theta(n^\alpha) \) for some constant \( 0 < \alpha \leq 1 \)? Compare these running times to the amortized costs of these operations for a Fibonacci heap.
+        
+        \item Show how to compute shortest paths from a single source on an \( \varepsilon \)-dense directed graph \( G = (V, E) \) with no negative-weight edges in \( O(E) \) time. (Hint: Pick \( d \) as a function of \( \varepsilon \).)
+        
+        \item Show how to solve the all-pairs shortest-paths problem on an \( \varepsilon \)-dense directed graph \( G = (V, E) \) with no negative-weight edges in \( O(VE) \) time.
+        
+        \item Show how to solve the all-pairs shortest-paths problem in \( O(VE) \) time on an \( \varepsilon \)-dense directed graph \( G = (V, E) \) that may have negative-weight edges but has no negative-weight cycles.
+    \end{enumerate}
+\hfill\end{p}
+
+
 \end{document}
 
 
