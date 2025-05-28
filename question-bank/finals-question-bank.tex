@@ -1,0 +1,348 @@
+% -*- program: xelatex -*-
+
+\newif\ifanswers
+%\answerstrue
+
+% Dr Driver's standard reading quiz
+% Source: https://gist.github.com/danieldriver/90a73c4d3c72dd837e39#file-quiz-tex 
+\documentclass[%
+% 11pt,
+% answers,
+addpoints]{exam}
+\usepackage{enumitem}
+ 
+\pagestyle{head}
+
+\usepackage{amssymb,amsmath,amsfonts,amsthm,graphicx}
+
+\usepackage[top=0.3in, bottom=0.75in, left=0.5in, right=0.5in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+
+
+\DeclareGraphicsExtensions{.pdf}
+%\centerline {\includegraphics[width=3in]{PICTURE}}
+
+
+
+\newtheoremstyle{problem}{\topsep}{\topsep}%%% space between body and thm
+		{}                      %%% Thm body font
+		{}                              %%% Indent amount (empty = no indent)
+		{\bfseries}            %%% Thm head font
+		{}                    %%% Punctuation after thm head
+		{ }                           %%% Space after thm head
+		{\thmnumber{#2}\thmnote{ \bfseries (#3)}}%%% Thm head spec
+\theoremstyle{problem}
+\newtheorem{p}{}
+
+\firstpageheader{% left
+	CS \liningnums{3250}: Algorithms --- Finals Question Bank \\
+	\today
+}{% center - blank
+}{% right
+	Full name1:\enspace\makebox[2in]{\hrulefill}\\
+	Full name2:\enspace\makebox[2in]{\hrulefill}\\
+}
+\runningheader{}{}{}
+% For double-sided quizzes
+% \pagestyle{headandfoot}
+% \footer{}{\thepage}{}
+
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+ 
+% Typography and layout
+\usepackage{fontspec,realscripts}
+\defaultfontfeatures{Ligatures=TeX}
+%\setmainfont{Meta Serif Pro}
+%\setsansfont{Meta Pro}
+\frenchspacing
+% - print solutions in sans serif
+\unframedsolutions
+\SolutionEmphasis{\sffamily}
+\renewcommand{\solutiontitle}{}
+% - box points & center in the right margin w/ custom setup@point@toks
+\boxedpoints
+\pointsinrightmargin
+\marginbonuspointname{\textsc{up}}
+\makeatletter% rewrite setup@point@toks assuming right margins
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}% define \clap as per https://www.tug.org/TUGboat/tb22-4/tb72perlS.pdf
+\def\setup@point@toks{%
+	\point@toks={%
+		\rlap{\hskip-\@totalleftmargin
+			  \hskip\textwidth
+			  \hskip\@rightmargin
+			  \hskip-\rightpointsmargin
+			  \clap{\padded@point@block}% change \llap to \clap
+		}%
+		\global \point@toks={}%
+	}%
+}% end setup@point@toks
+\setlength{\rightpointsmargin}{.5in}% assuming the default 1" margins
+\makeatother
+% - adjust the top and bottom margins
+\extraheadheight{.25in}
+\extrafootheight{-.5in}
+\setlength{\marginparwidth}{1.5in}
+% NB: remember to use \newpage after the last question
+\usepackage{xcolor}
+\usepackage{pagecolor}
+
+%\pagecolor{black}
+%\color{white}
+
+\usepackage[document]{ragged2e}
+\begin{document}
+
+ \pagestyle{empty}
+ \begin{FlushLeft}
+Finals Question Bank: Analysis of Algorithms\\
+\today
+\end{FlushLeft}
+
+	
+\thispagestyle{myheadings}
+\pagenumbering{gobble}
+\rule{500pt}{1.5pt}
+
+% Questions from q1.tex
+\begin{p}
+Let us consider the random experiment of rolling two dice.
+\begin{enumerate}
+    \item Define a random variable \(X\) as the number of 6's that you get. Find the expected value of \(X\).
+    \item Define a random variable \(Y\) as the sum of the two dice. Find the expected value of \(Y\).
+\end{enumerate}
+\hfill \end{p}
+
+\begin{p}
+Perform the analysis of Median of Median's Algorithm where we make chunks of size 9 instead of 5 and solve the recurrence using substitution method.
+\hfill \end{p}
+
+% Questions from q2.tex
+\begin{p}
+Let \( X \) be a random variable that is equal to the number of heads in two flips of a  
+fair coin. What is \( E(X^2) \)? What is \( (E(X))^2 \)?
+\hfill \end{p}
+
+% Questions from q3.tex
+\begin{p}
+Apply the algorithm step by step to find the articulation points in the following graphs:
+\end{p}
+
+\begin{center}
+\begin{tikzpicture}[scale=1, every node/.style={draw, circle, inner sep=2pt}]
+    \node (1) at (0, 2) {1};
+    \node (2) at (2, 2) {2};
+    \node (3) at (4, 2) {3};
+    \node (4) at (1, 0) {4};
+
+    \draw (1) -- (2);
+    \draw (2) -- (3);
+    \draw (4) -- (2);
+    \draw (1) -- (4);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=1, every node/.style={draw, circle, inner sep=2pt}]
+    \node (1) at (0, 2) {1};
+    \node (2) at (2, 2) {2};
+    \node (3) at (4, 2) {3};
+    \node (4) at (1, 0) {4};
+    \node (5) at (3, 0) {5};
+    \node (6) at (5, 0) {6};
+
+    \draw (1) -- (2);
+    \draw (2) -- (3);
+    \draw (2) -- (4);
+    \draw (3) -- (5);
+    \draw (5) -- (6);
+\end{tikzpicture}
+\end{center}
+
+% Questions from q4.tex
+\begin{p}
+Given an undirected graph with distinct non-negative edge weights. Suppose that you have computed shortest paths to all nodes from a particular node \( s \). Now suppose each edge weight is increased by 1; the new weights are \( w_e := w_e + 1 \). Do the shortest paths change? Give an example where they change or prove they cannot change.
+\hfill \end{p}
+
+\begin{p} 
+Give a general example of a weighted, directed graph \( G \) on \( n \) nodes where at least half of the edge weights are negative, and Dijkstra's algorithm correctly finds the shortest paths from a source vertex. Note that \( n \) is not fixed, so you cannot just give an example on 10 or 20 vertices. Your job is to maximize the number of edges that contain negative weights.
+\hfill \end{p}
+
+% Questions from q5.tex
+\begin{p}
+How can we use the output of the Floyd-Warshall algorithm to detect the presence of a negative-weight cycle?
+\hfill \end{p}
+
+% Questions from q6.tex
+\begin{p}
+"In GoldExtractor game, you collect coins using two extractors: a red vertical one that moves right and a blue horizontal one that moves up. Each time an extractor moves to a new line containing coins, it collects one coin, and all other coins on that line are lost. The game ends when either extractor reaches its final position, so plan your moves carefully to maximize your total score!"
+
+Design a complete Dynamic Programming algorithm for the problem. Your input is (x,y) coordinates of n coins, and your output is a number which is maximum number of coins collected. You can assume that $0 < x,y < n$.
+\hfill \end{p}
+
+% Questions from q7.tex
+\begin{p}
+Find the decision version of the minimum spanning tree problem. State the original problem and the decision problem formally.
+\hfill \end{p}
+
+\begin{p} 
+\textbf{Rod Cutting Problem}\\
+Given a rod of length $n$ and an array of prices \texttt{price} such that \texttt{price[i]} represents the price of a rod of length $i+1$, determine the maximum value obtainable by cutting up the rod and selling the pieces.
+\begin{itemize}
+  \item \textbf{Input:} $n = 8$, \texttt{price} = [1, 5, 8, 9, 10, 17, 17, 20]
+  \item \textbf{Output:} 22 (Cut into rods of lengths 2 and 6 for prices 5 and 17)
+\end{itemize}
+\hfill \end{p}
+
+% Questions from q8.tex
+\begin{p}
+Prove that the following problem is in NP:\\ 
+\hspace{9pt}Given an integer $x$, is $x$ NOT a prime?
+\hfill \end{p}
+
+\begin{p} 
+Reduce 4-SAT to 3-SAT.
+\hfill \end{p}
+
+% Questions from q9.tex
+\begin{p}
+Reduce Subset Sum to Partition problem.
+\hfill \end{p}
+
+\begin{p} 
+Reduce Partition to Subset Sum problem.
+\hfill \end{p}
+
+% Questions from q10.tex
+\begin{p}
+Reduce Partition to Bin Packing probem.
+\hfill \end{p}
+
+% Questions from q11.tex
+\begin{p}
+Reduce Vertex Cover to Set Cover problem.
+\hfill \end{p}
+
+% Questions from q12.tex
+\begin{p}
+Reduce Maximum Clique to Subgraph Isomorphism problem.
+\hfill \end{p}
+
+% Questions from q13.tex
+\begin{p}
+Reduce Subset Sum to Knapsack problem.
+\hfill \end{p}
+
+% Questions from q14.tex
+\begin{p}
+Reduce Vertex Cover to Maximum Dominating Set problem.
+\hfill \end{p}
+
+% Questions from w1.tex
+\begin{p}
+Solve the following recurrence relations:\\
+\vspace{10pt}
+\textbf{a.} \( T(n) = 2T(n/3) + 1 \)\\
+\textbf{b.} \( T(n) = 5T(n/4) + n \)\\
+\textbf{c.} \( T(n) = 9T(n/3) + n^2 \)\\
+\textbf{d.} \( T(n) = 2T(n-1) + 1 \)\\
+\textbf{e.} \( T(n) = T(\sqrt{n}) + 1 \)\\
+\hfill \end{p}
+
+\begin{p}
+An array \( A[1 \dots n] \) is said to have a \textbf{majority element} if more than half of its entries are the same. Given an array, the task is to design an efficient algorithm to determine whether the array has a majority element, and, if so, to find that element. The elements of the array are not necessarily from some ordered domain like the integers, so comparisons of the form "is \( A[i] > A[j]? \)" are not allowed. (Think of the array elements as GIF files, for instance.) However, you can answer questions of the form: "is \( A[i] = A[j]? \)" in constant time.\\
+\vspace{10pt}
+\textbf{Part 1:} Show how to solve this problem in \( O(n \log n) \) time. 
+\textbf{Hint:} Split the array \( A \) into two arrays \( A_1 \) and \( A_2 \) of half the size. Does knowing the majority elements of \( A_1 \) and \( A_2 \) help you figure out the majority element of \( A \)? If so, you can use a \textit{divide-and-conquer} approach.\\
+\vspace{10pt}
+\textbf{Part 2:} Can you give a linear-time algorithm? 
+\textbf{Hint:} Here's another \textit{divide-and-conquer} approach:
+\begin{itemize}
+    \item Pair up the elements of \( A \) arbitrarily to get \( n/2 \) pairs.
+    \item Look at each pair: if the two elements are different, discard both of them; if they are the same, keep just one of them.
+\end{itemize}
+Show that after this procedure there are at most \( n/2 \) elements left, and that they have a majority element if and only if \( A \) does.
+\hfill \end{p}
+
+% Questions from w2.tex
+\begin{p}
+Write an algorithm to merge three sorted arrays into a single sorted array.\\
+\hfill \end{p}
+
+\begin{p}
+Write an algorithm to merge \( k \) sorted arrays into a single sorted array.\\
+\hfill \end{p}
+
+\begin{p}
+Given two arrays \( A \) and \( B \), write an algorithm to find the median of \( A \cup B \) in the following cases:  
+\hfill \end{p}
+\begin{itemize}
+    \item When \( A \) and \( B \) are sorted.
+    \item When \( A \) and \( B \) are unsorted.
+\end{itemize}
+
+% Questions from w3.tex
+\begin{p}
+Give an \( O(n \log k) \)-time algorithm to merge \( k \) sorted lists into one sorted list,  
+where \( n \) is the total number of elements in all the input lists. (Hint: Use a min-heap for \( k \)-way merging.)
+\hfill \end{p}
+
+\begin{p}
+You are given an array of strings, where different strings may have different  
+numbers of characters, but the total number of characters over all the strings  
+is \( n \). Show how to sort the strings in \( O(n) \) time.  
+(Note that the desired order here is the standard alphabetical order; for example,  
+\( a < ab < b \).)
+\hfill \end{p}
+
+% Questions from w4.tex
+\begin{p}
+What is the running time of the Breadth-First Search (BFS) algorithm if we represent its input graph using an adjacency matrix and modify the algorithm to handle this form of input?
+\hfill \end{p}
+
+\begin{p}
+The \textbf{diameter} of a tree \( T = (V, F) \) is defined as \( \max \{ \delta(u, v) : u, v \in V \} \), that is, the largest of all shortest-path distances in the tree. Give an efficient algorithm to compute the diameter of a tree, and analyze the running time of your algorithm.
+\hfill \end{p}
+
+% Questions from w5.tex
+\begin{p}
+For each of the following strings:
+\begin{enumerate}[label=\alph*.]
+    \item Build a frequency table for the characters.
+    \item Construct the Huffman merge tree.
+    \item Generate Huffman codes for each character.
+    \item Encode the full string using the Huffman codes.
+    \item Compare the number of bits in the Huffman-encoded version with standard ASCII encoding (8 bits per character).
+\end{enumerate}
+
+\texttt{AGCTTAGGCTTAA}
+\hfill \end{p}
+
+% Questions from w6.tex
+\begin{p}
+\textbf{Coin Change Problem} \\[1ex]
+Given coin denominations $c_1, c_2, \ldots, c_n$ and a target amount $A$, find the minimum number of coins needed to make change for the amount $A$. Assume an infinite supply of coins of each denomination.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Longest Increasing Subsequence}\\[1ex]
+Given a sequence of integers $A = a_1, a_2, \ldots, a_n$, find the length of the longest subsequence such that all elements of the subsequence are sorted in increasing order.
+\hfill \end{p}
+
+% Questions from w7.tex
+\begin{p}
+Reduce Maximum Independent Set to Maximum Clique problem.
+\hfill \end{p}
+
+% Questions from w8.tex
+\begin{p}
+Reduce Hamiltonian Cycle to Hamiltonian Path problem.
+\hfill \end{p}
+
+
+
+\end{document} 
