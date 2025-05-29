@@ -343,6 +343,514 @@ Reduce Maximum Independent Set to Maximum Clique problem.
 Reduce Hamiltonian Cycle to Hamiltonian Path problem.
 \hfill \end{p}
 
+\newpage
 
+% -------------------------------------------------------------------------
+% By Muhammad Wasif
+% -------------------------------------------------------------------------
+
+\begin{p}
+\textbf{Box Stacking Problem}
+
+\textbf{Definition:} Given a set of $n$ boxes, each with height $h_i$, width $w_i$, and depth $d_i$, determine the maximum possible height of a stack that can be formed under the following constraints:
+\begin{itemize}
+\item A box can be rotated so that any side functions as its base.
+\item A box can only be stacked on top of another if both its width and depth are strictly less than those of the box below it.
+\item Only one instance of each box can be used in the stack.
+\end{itemize}
+
+\textbf{Input:} An array of $n$ boxes, each defined by three integers: height $h_i$, width $w_i$, and depth $d_i$.
+
+\textbf{Output:} Maximum stack height achievable by stacking the boxes.
+
+\textbf{Recurrence Relation:}
+\[ \text{DP}[i] = \max (h_i, h_i + \text{DP}[j] \mid j < i \text{ and } w_i < w_j \text{ and } d_i < d_j ) \]
+
+\textbf{Steps:}
+\begin{enumerate}
+\item Generate all rotations of each box (3 per box) so width $\geq$ depth.
+\item Sort all $3n$ boxes by decreasing base area ($w \times d$).
+\item Apply the recurrence using bottom-up DP.
+\end{enumerate}
+
+\textbf{Example:} Input: Boxes = [(4,6,7), (1,2,3), (4,5,6)]\\
+Output: 15
+\hfill \end{p}
+
+\begin{p}
+\textbf{3SAT to Mario Level Completion}
+
+\textbf{Definition:}
+\begin{itemize}
+\item \textbf{3SAT:} Given a Boolean formula in CNF with exactly three literals per clause, determine whether there exists a truth assignment that satisfies the formula.
+\item \textbf{Mario Level Completion:} Given a Mario-style platform level with switches, obstacles, and doors, determine whether Mario can reach the goal under the game's rules.
+\end{itemize}
+
+\textbf{Example (3SAT):} Formula: $(x_1 \vee \neg x_2 \vee x_3) \wedge (\neg x_1 \vee x_2 \vee x_3)$\\
+Satisfying assignment: $x_1 = \text{true}$, $x_2 = \text{false}$, $x_3 = \text{true}$
+
+\textbf{Example (Mario Level):} Each variable corresponds to a choice of path: assigning true or false blocks the other path. Each clause is a locked door opened if at least one of its literals' paths has been taken.
+
+\textbf{Task:} Reduce from 3SAT to Mario Level Completion. Construct a Mario level such that Mario can reach the goal if and only if the 3SAT formula is satisfiable.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Huffman Coding}
+
+\textbf{Definition:} Given a string of characters, generate prefix-free binary codes using Huffman's algorithm to minimize the total encoded message length.
+
+\textbf{Input String:} "data structures and algorithms"
+
+\textbf{Tasks:}
+\begin{enumerate}
+\item Count the frequency of each character (including spaces).
+\item Build the Huffman tree from frequencies.
+\item Assign binary codes to each character.
+\item Encode the original string using those binary codes.
+\end{enumerate}
+
+\textbf{Output:} A binary string representing the Huffman encoding of the input, and the binary codes used.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Knapsack to Bin Partitioning}
+
+\textbf{Definition:}
+\begin{itemize}
+\item \textbf{Knapsack Problem:} Given $n$ items with weights $w_i$ and values $v_i$, and capacity $W$, determine the maximum total value of a subset of items whose total weight does not exceed $W$.
+\item \textbf{Bin Partitioning Problem (Decision Version):} Given $n$ items with weights $w_i$, a bin capacity $C$, and an integer $k$, determine whether the items can be partitioned into $k$ or fewer bins, such that the total weight in each bin does not exceed $C$.
+\end{itemize}
+
+\textbf{Example (Knapsack):}\\
+Items = $\{(4,6), (2,4), (3,5), (5,8)\}$, $W = 7$\\
+Max value = 11 (select items with weights 2 and 5)
+
+\textbf{Example (Bin Partitioning):}\\
+Item weights = $\{4, 2, 3, 5\}$, $C = 7$, $k = 2$\\
+Valid bins: $\{2, 5\}$, $\{3, 4\}$
+
+\textbf{Task:} Reduce from Knapsack to Bin Partitioning. Construct an instance of the bin problem such that solving it corresponds to solving the original Knapsack instance.
+\hfill \end{p}
+
+\begin{p}
+\textbf{All-Pairs Shortest Paths Using Floyd-Warshall Algorithm}
+
+\textbf{Problem Definition:}\\
+Given a directed graph $G = (V, E)$ with edge weights (positive or negative, but no negative cycles), compute the shortest path distances between every pair of vertices using the Floyd-Warshall algorithm.
+
+\textbf{Input:}\\
+A weighted directed graph with $n = 5$ vertices and the following edges shown in the diagram:
+
+\begin{center}
+    \begin{tikzpicture}[shorten >=1pt, auto, node distance=2.8cm,
+        thick, main node/.style={circle, draw, font=\sffamily\Large\bfseries},
+        edge/.style={->, >=stealth, thick}]
+      
+        \node[main node] (0) {0};
+        \node[main node] (1) [right of=0] {1};
+        \node[main node] (2) [below left of=0] {2};
+        \node[main node] (3) [below right of=2] {3};
+        \node[main node] (4) [right of=3] {4};
+      
+        \path[every node/.style={font=\sffamily\small}]
+          (0) edge node {4} (1)
+              edge node {5} (3)
+          (1) edge node {6} (4)
+              edge[bend right=90] node {1} (2)
+          (2) edge node {3} (3)
+              edge node {2} (0)
+          (3) edge node {2} (4)
+              edge[bend left=40] node {1} (2)
+          (4) edge[bend left=40] node {4} (3)
+              edge node {1} (0)
+          ;
+      
+      \end{tikzpicture}
+\end{center}
+
+\textbf{Output:}\\
+A matrix $D$ such that $D[i][j]$ contains the shortest path distance from vertex $i$ to vertex $j$.
+
+\textbf{Recurrence Relation:}\\
+Let $D^{(k)}[i][j]$ be the shortest distance from vertex $i$ to $j$ using only intermediate vertices from the set $\{0, 1, ..., k\}$. Then:
+
+$D^{(0)}[i][j] = 
+\begin{cases} 
+0 & \text{if } i = j \\
+w(i, j) & \text{if } (i, j) \in E \\
+\infty & \text{otherwise}
+\end{cases}$
+
+$D^{(k)}[i][j] = \min\{D^{(k-1)}[i][j], D^{(k-1)}[i][k] + D^{(k-1)}[k][j]\}$
+
+\textbf{Example:} Using the provided graph, the initial distance matrix $D^{(0)}$ is:
+$\begin{pmatrix}
+0 & 4 & 2 & 5 & 1 \\
+\infty & 0 & \infty & \infty & 6 \\
+\infty & 1 & 0 & 3 & \infty \\
+\infty & \infty & \infty & 0 & 2 \\
+\infty & \infty & \infty & 4 & 0
+\end{pmatrix}$
+
+After applying Floyd-Warshall, the final distance matrix $D$ gives the shortest paths between all pairs of vertices.
+\hfill \end{p}
+
+% -------------------------------------------------------------------------
+% By Jalal Ahmed
+% -------------------------------------------------------------------------
+
+\begin{p}
+\textbf{Smallest Number with Given Digit Count and Sum}
+
+Given two integers $s$ and $d$, find the smallest possible number that has exactly $d$ digits and a sum of digits equal to $s$. Return the number as a string. If no such number exists, return "-1".
+
+\textbf{Examples:}
+\begin{itemize}
+\item \textbf{Input:} $s = 9$, $d = 2$\\
+      \textbf{Output:} "18"\\
+      \textbf{Explanation:} 18 is the smallest number possible with the sum of digits = 9 and total digits = 2.
+      
+\item \textbf{Input:} $s = 20$, $d = 3$\\
+      \textbf{Output:} "299"\\
+      \textbf{Explanation:} 299 is the smallest number possible with the sum of digits = 20 and total digits = 3.
+      
+\item \textbf{Input:} $s = 1$, $d = 1$\\
+      \textbf{Output:} "1"\\
+      \textbf{Explanation:} 1 is the smallest number possible with the sum of digits = 1 and total digits = 1.
+\end{itemize}
+\hfill \end{p}
+
+\begin{p}
+\textbf{Minimum Spanning Tree (MST)}
+
+Given an undirected, weighted and connected graph $G$ with $n$ vertices and $m$ edges, find the weight of the Minimum Spanning Tree.
+
+\textbf{Example:}
+\begin{center}
+\begin{tikzpicture}[scale=1.2, every node/.style={draw, circle, inner sep=2pt}]
+    \node (1) at (0, 2) {1};
+    \node (2) at (2, 2) {2};
+    \node (3) at (0, 0) {3};
+    \node (4) at (2, 0) {4};
+
+    \draw (1) -- node[draw=none, fill=none, above] {1} (2);
+    \draw (1) -- node[draw=none, fill=none, left] {4} (3);
+    \draw (2) -- node[draw=none, fill=none, right] {2} (3);
+    \draw (3) -- node[draw=none, fill=none, below] {3} (4);
+\end{tikzpicture}
+\end{center}
+
+MST weight = 6 (edges with weights 1, 2, and 3)
+\hfill \end{p}
+
+\begin{p}
+Given an array of $n$ integers, find the length of the longest increasing subsequence.
+
+\textbf{Example:}
+Given an array $A = [ 10, 9, 2, 5, 3, 7, 101, 18 ]$\\
+LIS = $[ 2, 3, 7, 101 ]$ and the length is 4.
+\hfill \end{p}
+
+\begin{p}
+Show how the Maximum Independent Set problem can be reduced to the Maximum Clique problem.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Huffman Coding}
+
+Construct a Huffman Tree using the given frequency table, then determine the Huffman Encoding for each character.
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Character} & \textbf{Frequency} \\
+\hline
+A & 5 \\
+B & 9 \\
+C & 12 \\
+D & 13 \\
+E & 16 \\
+F & 45 \\
+\hline
+\end{tabular}
+\end{center}
+\hfill \end{p}
+
+% -------------------------------------------------------------------------
+% By Fahad
+% -------------------------------------------------------------------------
+
+\begin{p}
+\textbf{Minimum Cost with K Stops (Flight Problem)}
+
+Given flights between cities with costs, a source, destination, and max K stops allowed, find the minimum cost path using a modified Dijkstra or BFS+DP approach.
+\hfill \end{p}
+
+\begin{p}
+\textbf{SSSP with Edge Penalty}
+
+Each edge has a weight $w$ and a penalty $p$. If you take two consecutive edges with the same penalty, you pay the penalty only once. Find the shortest path from the source to destination minimizing the total cost (weight + penalty rules).
+\hfill \end{p}
+
+\begin{p}
+\textbf{Transitive Closure using Floyd-Warshall}
+
+Given a directed graph, compute the transitive closure (i.e., for every pair $(u, v)$, determine if $v$ is reachable from $u$). You must modify Floyd-Warshall to work with boolean matrix.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Minimum Number of Platforms (Train Problem)}
+
+Given arrival and departure times of trains at a station, find the minimum number of platforms required so that no train waits.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Longest Bitonic Subsequence}
+
+Find the length of the longest subsequence that first increases and then decreases. Combine LIS from left and LDS from right for each position.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Subset Product Problem}
+
+Given a set of positive integers and a target product $P$, is there a subset whose product is exactly $P$?
+\hfill \end{p}
+
+% -------------------------------------------------------------------------
+% By M Hamza Naveed
+% -------------------------------------------------------------------------
+
+\begin{p}
+\textbf{Knapsack Problem}
+
+You're going on a treasure hunt with a backpack that can carry only $W$ kg. There are $n$ items, each with a weight and value. You can take each item only once or not at all. Which items should you pick to get maximum value without overloading your backpack?
+\hfill \end{p}
+
+\begin{p}
+\textbf{Fractional Knapsack}
+
+You're still collecting treasure! But this time, your magical bag allows you to take fractions of items. You can take half a gold bar if needed. Your goal? Maximize the loot you can carry in the same $W$ kg bag.
+
+And will greedy approach fail? Explain with example.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Travelling Salesman Problem (TSP)}
+
+You are a delivery person. You must visit all cities once, then return home. Your task is to find the shortest path that does this.
+
+You're given a weighted graph of cities and a bound of total cost you incur during your trip. For this problem, prove it is an NP-hard problem.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Transitive Closure using Floyd–Warshall}
+
+You want to know who is related to whom in a network. Even if there's no direct relation, can person A be related to person B through others?
+
+Instead of a list of all relations, you just want Yes/No for every pair.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Bellman–Ford Algorithm – Single Source Shortest Path}
+
+You're navigating a graph that might have negative tolls (yep, they pay you!). Find the shortest path from one place to all others.
+
+Also, detect if there's a nasty loop giving infinite money.
+\hfill \end{p}
+
+% -------------------------------------------------------------------------
+% By Khadija Farooqi
+% -------------------------------------------------------------------------
+
+\begin{p}
+
+Given an instance of the CLIQUE problem, construct a polynomial-time transformation that converts it into an instance of the INTERVAL SCHEDULING WITH CONSTRAINTS problem such that:
+
+The original graph $G=(V,E)$ contains a clique of size $k$ if and only if the corresponding interval scheduling instance allows selecting $k$ non-overlapping intervals that satisfy the specified constraints.
+
+\textbf{Definitions:}
+\begin{itemize}
+\item \textbf{CLIQUE Problem:} Given a graph $G=(V,E)$ and an integer $k$, does $G$ contain a clique (a complete subgraph) of size $k$?
+\item \textbf{Interval Scheduling with Constraints:} Given a set of intervals with associated constraints (e.g., mutual exclusivity, resource limits, or time gaps), is it possible to select a subset of $k$ mutually compatible intervals?
+\end{itemize}
+\hfill \end{p}
+
+\begin{p}
+
+Given an instance of the Travelling Salesman Problem (TSP), construct a polynomial-time transformation that produces an instance of the Hamiltonian Cycle problem such that:
+
+The original TSP instance has a tour of total weight $\leq K$ if and only if the corresponding graph in the HAM-CYCLE instance contains a Hamiltonian cycle.
+
+\textbf{Definitions:}
+\begin{itemize}
+\item \textbf{Travelling Salesman Problem (Decision version):} Given a complete weighted graph $G=(V,E)$ and an integer $K$, does there exist a tour (a cycle visiting every vertex exactly once and returning to the start) of total weight less than or equal to $K$?
+\item \textbf{Hamiltonian Cycle Problem:} Given an unweighted graph $G=(V,E)$, does there exist a cycle that visits every vertex exactly once?
+\end{itemize}
+\hfill \end{p}
+
+\begin{p}
+Why does not Dijkstra work for the negative weights? Explain with the reasoning.
+\hfill \end{p}
+
+\begin{p}
+
+Given a 2D binary matrix of 0s and 1s, find the area of the largest square containing only 1s.
+
+\textbf{Example Input:} 
+\begin{verbatim}
+Matrix:
+1 0 1 0 0
+1 0 1 1 1
+1 1 1 1 1
+1 0 0 1 0
+\end{verbatim}
+
+\textbf{Expected Output:} Area = 9 (3x3 square)
+\hfill \end{p}
+
+\begin{p}
+
+You are continuously inserting integers into a list. Return the kth largest element after each insertion.
+\hfill \end{p}
+
+% -------------------------------------------------------------------------
+% By Abuhurairah Faheem
+% -------------------------------------------------------------------------
+
+\begin{p}
+\textbf{House Robber Problem}
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, and you cannot rob two adjacent houses because it will alert the police. Given an array of non-negative integers representing the amount of money in each house, determine the maximum amount of money you can rob without alerting the police.
+
+\textbf{Example:}\\
+Input: nums [2, 7, 9, 3, 1]\\
+Output: 12\\
+Explanation: Rob house 1 (\$2), skip house 2 (\$7), rob house 3 (\$9), and rob house 5 (\$1) for a total of 2+9+1 = 12.
+\hfill \end{p}
+
+\begin{p}
+\textbf{All-Pairs Shortest Paths (Floyd-Warshall Algorithm)}
+
+Given a directed graph with n vertices and weighted edges (some weights may be negative, but no negative cycles), find the shortest paths between all pairs of vertices.
+
+\textbf{Input:}\\
+Graph represented as an adjacency matrix:
+\begin{verbatim}
+[ [0 3 ∞ ∞]
+  [∞ 0 1 ∞]
+  [∞ ∞ 0 2]
+  [2 ∞ ∞ 0] ]
+\end{verbatim}
+
+\textbf{Output:}\\
+Shortest-path matrix.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Dijkstra Algorithm on Graph with Negative Edge}
+
+\begin{itemize}
+\item Run Dijkstra from A to C on the graph with edges A→B(2), B→C(–1), A→C(4). What shortest path and distance does it find?
+\item Does Dijkstra produce the correct shortest path here despite the negative edge?
+\end{itemize}
+\hfill \end{p}
+
+\begin{p}
+\textbf{Compress a File Header}
+
+Given a list of characters and their frequencies from a text file header, build the Huffman tree and output the code for each character.
+
+\textbf{Input:} \{a: 5, b: 9, c: 12, d: 13\}
+
+\textbf{Task:} Build Huffman codes.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Reduction: Partition to Job Schedule}
+
+Reduce Partition problem to Job schedule problem.
+\hfill \end{p}
+
+% -------------------------------------------------------------------------
+% By Muhammad Ibrahim Butt
+% -------------------------------------------------------------------------
+
+\begin{p}
+\textbf{3-SAT to Vertex Cover (NP-Complete Reduction)}
+\textbf{What:}
+A way to convert a 3-SAT logical formula into a graph so that finding a vertex cover corresponds exactly to finding a satisfying assignment for the formula.
+
+\textbf{How:}
+\begin{itemize}
+\item For each variable $x_i$, create two nodes $x_i$ and $\neg x_i$ connected by an edge (representing the choice of true/false).
+\item For each clause (3 literals), create a triangle of three nodes connected in a cycle.
+\item Connect each literal node in the clause triangle to its corresponding variable node.
+\item The vertex cover size $k = n + 2m$ where $n$ = variables and $m$ = clauses.
+\end{itemize}
+
+\textbf{Why:} Picking one vertex from each variable pair corresponds to a truth assignment. The clause triangles force the selection of vertices such that the clause is "covered" (satisfied). Thus, vertex cover solutions correspond to formula satisfiability.
+\hfill \end{p}
+
+\begin{p}
+\textbf{SPFA (Shortest Path Faster Algorithm)}
+\textbf{What:}
+An optimized version of Bellman-Ford algorithm to find shortest paths from a single source, especially for graphs with negative edges but no negative cycles.
+
+\textbf{How:}
+\begin{itemize}
+\item Uses a queue to process nodes whose distance estimate can still be improved.
+\item Nodes are added to the queue only when their distance is updated, reducing unnecessary relaxations.
+\item Faster on average than Bellman-Ford because it avoids processing all edges every iteration.
+\end{itemize}
+
+\textbf{When to use:} Graphs with negative weights but no negative cycles, where Dijkstra's algorithm cannot be applied.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Binary Search + Patience Sorting for LIS (Longest Increasing Subsequence)}
+\textbf{What:}
+Efficient method to find the length of the Longest Increasing Subsequence in $O(n \log n)$ time.
+
+\textbf{How:}
+\begin{itemize}
+\item Maintain a list $tails$, where $tails[i]$ is the smallest possible tail value of an increasing subsequence of length $i+1$.
+\item For each element $x$ in the sequence, use binary search on $tails$ to find the position to place $x$ (replace or append).
+\item The length of $tails$ at the end is the length of LIS.
+\end{itemize}
+
+\textbf{Why:} Patience sorting mimics the card game and the binary search efficiently maintains the subsequence tails.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Johnson's Algorithm (All Pairs Shortest Path)}
+\textbf{What:}
+Computes shortest paths between all pairs of vertices in a weighted, directed graph which may contain negative edges but no negative cycles.
+
+\textbf{How:}
+\begin{itemize}
+\item Add a new vertex connected to every other vertex with zero-weight edges.
+\item Run Bellman-Ford from this new vertex to find a potential function $h(v)$ to reweight edges and remove negative weights.
+\item Reweight edges using $h(u), h(v)$: $w'(u,v) = w(u,v) + h(u) - h(v)$, all non-negative now.
+\item Run Dijkstra's algorithm from each vertex on the reweighted graph.
+\item Correct final distances by reversing reweighting.
+\end{itemize}
+
+\textbf{Why:} Combines Bellman-Ford's ability to handle negative weights and Dijkstra's efficiency on non-negative weights.
+\hfill \end{p}
+
+\begin{p}
+\textbf{Activity Selection Problem}
+
+\textbf{What:}
+Select the maximum number of activities that don't overlap given their start and finish times.
+
+\textbf{How:}
+\begin{itemize}
+\item Sort activities by finish times.
+\item Iteratively pick the earliest finishing activity that starts after the last selected one.
+\end{itemize}
+
+\textbf{Why:} This greedy choice ensures optimality because picking the activity that frees the schedule earliest maximizes remaining time for others.
+\hfill \end{p}
 
 \end{document} 
