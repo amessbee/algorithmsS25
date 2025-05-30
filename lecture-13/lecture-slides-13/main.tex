@@ -1,0 +1,148 @@
+
+\documentclass[10pt,aspectratio=43]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\definecolor{background}{HTML}{F4F4F4}
+\usepackage[normalem]{ulem}
+%\usepackage[table]{xcolor}
+\usepackage{multirow,rotating}
+\usepackage{color}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage{tikz-cd}
+\usepackage{svg}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes, shadows, positioning, arrows, calc, backgrounds, graphs, graphdrawing}
+\usegdlibrary{trees,force}
+\tikzset{
+    vertex/.style={
+        circle,
+        draw=black,
+        fill=gray!20,
+        thick,
+        inner sep=0pt,
+        minimum size=20pt
+    }
+}
+%% Edit Begin %%
+\tikzstyle{line}=[draw] % here
+\tikzstyle{arrow}=[draw] % here
+%% Edit End %%
+
+\usepackage{tabularx}
+%\begin{tikzpicture}
+\usepackage{tikz}
+%\usetikzlibrary{decorations.pathreplacing}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{mathtools,nccmath}%
+\usepackage{etoolbox, xparse} 
+\usepackage{algorithm, algorithmic}
+\usepackage{amsmath}
+\setlength{\marginparwidth}{2cm}
+\usepackage[colorinlistoftodos, backgroundcolor = gray!20]{todonotes}
+%\usepackage[colorinlistoftodos, color=blue!10]{todonotes}
+\newcommand{\todogreen}[2][]
+{\todo[color=green!10, #1]{#2}}
+\newcommand{\todoblue}[2][]
+{\todo[color=blue!10, #1]{#2}}
+\newcommand{\todored}[2][]
+{\todo[color=red!10, #1]{#2}}
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{multicol}
+\usepackage{emoji} % Add the emoji package
+%\usepackage{fontspec}
+
+% these lines must come after fontspec
+%\newfontfamily\DejaSans{DejaVu Sans}
+%\newcommand\todo{{\color{red}\DejaSans ��}}
+
+\usepackage{epsfig}
+\usepackage{amssymb, graphicx, amsmath, amsthm}
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{lem}{Lemma}[thm]
+\newtheorem{cor}{Corollary}[thm]
+\newtheorem{prop}{Proposition}[thm]
+\newtheorem{rem}{Remark}[thm]
+\newtheorem{ill}{Illustration}[thm]
+\newtheorem{prob}{Problem}[thm]
+
+% set colors
+\definecolor{myNewColorA}{RGB}{158, 27,50}
+\definecolor{maroon}{RGB}{158, 27,50}
+\definecolor{dblue}{RGB}{90, 27,158}
+\definecolor{myNewColorB}{RGB}{158, 27,50}
+\definecolor{myNewColorC}{RGB}{158, 27,50} % {130,138,143}
+\setbeamercolor*{palette primary}{bg=myNewColorC}
+\setbeamercolor*{palette secondary}{bg=myNewColorB, fg = white}
+\setbeamercolor*{palette tertiary}{bg=myNewColorA, fg = white}
+\setbeamercolor*{titlelike}{fg=myNewColorA}
+\setbeamercolor*{title}{bg=myNewColorA, fg = white}
+\setbeamercolor*{item}{fg=myNewColorA}
+\setbeamercolor*{caption name}{fg=myNewColorA}
+\usefonttheme{professionalfonts}
+\usepackage{natbib}
+\usepackage{luamplib}
+\usepackage{hyperref}
+\newcounter{saveenumi}
+\newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+\newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
+
+\usefonttheme{professionalfonts} % using non standard fonts for beamer
+\usefonttheme{serif} % default family is serif
+\usepackage{fontspec}
+
+
+\setbeamerfont{title}{size=\large}
+\setbeamerfont{subtitle}{size=\small}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{institute}{size=\footnotesize}
+\title[Graphs and Stuff]{Graph Basics}%title
+%\subtitle{ }%%subtitle
+% \author[Roll Tide]{Roll Tide\inst{1} and Crimson Ride\inst{1}}%%authors
+
+\institute[Prof. Shabbir]{Information Technology University}
+\date[\textcolor{white}{ Discrete Structures}]
+{CS 3250 Algorithms\\
+\today}
+
+\title{Algorithms, Design \& Analysis}
+\subtitle{Introduction}
+\author[Mudassir]{Dr. Mudassir Shabbir}
+\institute[ITU]{Information Technology University}
+\date{March 04, 2025}
+\titlegraphic{\vspace{-0.1cm}\small Lecture notes prepared by \textcolor{blue}{\textbf{Jalal Ahmed}} and \textcolor{blue}{\textbf{Ammar Khan}}.}
+\logo{\includegraphics[height=1cm]{figures/general/university_logo}} % Replace with your logo file
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}%\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+% ------Contents below------
+%------------------------------------------------------------
+\setmainfont{Herculanum}
+
+
+\begin{document}
+\frame{\titlepage}
+\setmainfont{Noteworthy}
+\input{intro}\end{document}

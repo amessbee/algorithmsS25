@@ -1,0 +1,1050 @@
+\documentclass[10pt,aspectratio=43]{beamer}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}  % For professional table formatting
+\usepackage[utf8]{inputenc}  % Allow Unicode characters like ≠
+\pgfplotsset{compat=1.17}
+
+% ========== Colors & Theme ==========
+\definecolor{myMaroon}{RGB}{158, 27, 50}
+\definecolor{myBlue}{RGB}{90, 27, 158}
+
+\usetheme{CambridgeUS}
+\setbeamercolor*{titlelike}{fg=myMaroon}
+
+% ========== Title Page ==========
+\title{Algorithms, Design \& Analysis}
+\subtitle{Lecture 21: Edit Distance Problem And Longest Common Subsequence Problem}
+\author[BSCS23011 \& BSCS23047]{Muhammad Hassan \& Muhammad Fahad}
+\institute[ITU]{Information Technology University}
+\date{April 15, 2025}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{About Your Fellows}
+    \begin{itemize}
+        \item Hi there! We are \textbf{Muhammad Hassan} and \textbf{Muhammad Fahad}.
+        \item We are Associate Students at ITU.
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+   \frametitle{Recap}
+
+   \textbf{Dynamic Programming (DP)}\\
+   \begin{itemize}
+       \item A method for solving complex problems by breaking them down into simpler subproblems.
+       \item Solves each subproblem only once and stores the result (memoization).
+       \item Used when the problem has optimal substructure and overlapping subproblems.
+   \end{itemize}
+
+   \textbf{Floyd-Warshall Algorithm}\\
+   \begin{itemize}
+       \item Finds shortest paths between all pairs of vertices.
+       \item Handles negative edge weights (not negative cycles).
+       \item Update rule: \texttt{d[i][j] = min(d[i][j], d[i][k] + d[k][j])}
+       \item Works step-by-step by allowing increasing number of intermediate vertices.
+   \end{itemize}
+
+   \textbf{Key Concepts}\\
+   \begin{itemize}
+       \item Dynamic Programming optimizes overlapping subproblems.
+       \item Absence of $\infty$ does not always mean shortest path is found.
+       \item Negative cycle exists if $d[i][i] < 0$ after Floyd-Warshall.
+   \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Problem Statement}
+
+    \textbf{Given:} Two strings, $s_1$ and $s_2$.
+
+    \vspace{0.3cm}
+
+    \textbf{Goal:} Transform $s_1$ into $s_2$ using the minimum number of operations.
+
+    \vspace{0.3cm}
+
+    \textbf{Allowed Operations:}
+    \begin{itemize}
+        \item \textbf{Insert:} Add a character at any position.
+        \item \textbf{Delete:} Remove any character.
+        \item \textbf{Switch:} Replace one character with another.
+    \end{itemize}
+
+    \vspace{0.3cm}
+
+    \textbf{Example:}
+    \begin{itemize}
+        \item $s_1 = \texttt{GTGTACC}$ \quad (length $n = 7$)
+        \item $s_2 = \texttt{CCGAT}$ \quad (length $m = 5$)
+    \end{itemize}
+
+    \vspace{0.3cm}
+
+    \textbf{Objective:} Determine the minimum number of operations required to make $s_1 = s_2$.
+\end{frame}
+
+\begin{frame}{Manual Solution - Part 1/2}
+\footnotesize
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Step} & \textbf{Alignment} & \textbf{Operation} \\
+\hline
+Initial & 
+\begin{tabular}[t]{@{}l@{}}
+s1: \texttt{G T G T A C C} \\
+s2: \texttt{C C G A T \phantom{C}}
+\end{tabular} & 
+Start with original strings \\
+\hline
+1 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: \textcolor{red}{\texttt{G}} T G T A C C \\
+s2: \textcolor{red}{\texttt{C}} C G A T \phantom{C}
+\end{tabular} & 
+Compare \textcolor{red}{G} (s1) vs \textcolor{red}{C} (s2) \\
+& \texttt{C T G T A C C} $\Rightarrow$ \texttt{C C G A T \phantom{C}} & 
+Substitute G→C (+1) \\
+\hline
+2 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: C \textcolor{red}{\texttt{T}} G T A C C \\
+s2: C \textcolor{red}{\texttt{C}} G A T \phantom{C}
+\end{tabular} & 
+Compare \textcolor{red}{T} (s1) vs \textcolor{red}{C} (s2) \\
+& \texttt{C C G T A C C} $\Rightarrow$ \texttt{C C G A T \phantom{C}} & 
+Substitute T→C (+1) \\
+\hline
+3 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: C C \textcolor{green}{\texttt{G}} T A C C \\
+s2: C C \textcolor{green}{\texttt{G}} A T \phantom{C}
+\end{tabular} & 
+\textcolor{green}{Match} G (no cost) \\
+\hline
+4 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: C C G \textcolor{red}{\texttt{T}} A C C \\
+s2: C C G \textcolor{red}{\texttt{A}} T \phantom{C}
+\end{tabular} & 
+Compare \textcolor{red}{T} vs \textcolor{red}{A} \\
+& \texttt{C C G A A C C} $\Rightarrow$ \texttt{C C G A T \phantom{C}} & 
+Substitute T→A (+1) \\
+\hline
+\end{tabular}
+\begin{block}{Progress after Step 4}
+\begin{itemize}
+\item Current s1: \texttt{C C G A A C C}
+\item Target s2: \texttt{C C G A T}
+\item Operations: 3 substitutions
+\item Total cost: 3
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Manual Solution - Part 2/2}
+\footnotesize
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Step} & \textbf{Alignment} & \textbf{Operation} \\
+\hline
+5 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: C C G A \textcolor{red}{\texttt{A}} C C \\
+s2: C C G A \textcolor{red}{\texttt{T}} \phantom{C}
+\end{tabular} & 
+Compare \textcolor{red}{A} vs \textcolor{red}{T} \\
+& \texttt{C C G A T C C} $\Rightarrow$ \texttt{C C G A T \phantom{C}} & 
+Substitute A→T (+1) \\
+\hline
+6 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: C C G A T \textcolor{red}{\texttt{C}} C \\
+s2: C C G A T \textcolor{red}{\texttt{$\epsilon$}}
+\end{tabular} & 
+Extra \texttt{C} in s1 \\
+& \texttt{C C G A T C} $\Rightarrow$ \texttt{C C G A T} & 
+Delete C (+1) \\
+\hline
+7 & 
+\begin{tabular}[t]{@{}l@{}}
+s1: C C G A T \textcolor{red}{\texttt{C}} \\
+s2: C C G A T \textcolor{red}{\texttt{$\epsilon$}}
+\end{tabular} & 
+Extra \texttt{C} in s1 \\
+& \texttt{C C G A T} $\Rightarrow$ \texttt{C C G A T} & 
+Delete C (+1) \\
+\hline
+\end{tabular}
+\begin{block}{Final Cost Summary}
+\begin{itemize}
+\item Substitutions: 4 (Steps 1,2,4,5)
+\item Deletions: 2 (Steps 6,7)
+\item \textbf{Total Cost: 6}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Recursive solution Step 1: Base Case Identification}
+    \framesubtitle{Handling Strings of Length $\leq$ 1}
+
+    \textbf{Core Principle:}
+    \begin{itemize}
+        \item Solve smallest possible subproblems first
+        \item Only consider strings where $|s_1| \leq 1$ and $|s_2| \leq 1$
+    \end{itemize}
+
+    \vspace{0.3cm}
+    
+    \textbf{Base Cases:}
+    \begin{itemize}
+        \item \textcolor{blue}{\textbf{Case 1: Both Empty}}
+        \begin{itemize}
+            \item $s_1 = ""$, $s_2 = ""$
+            \item Operations: None needed
+            \item \fbox{Distance = 0}
+        \end{itemize}
+        
+        \vspace{0.2cm}
+        
+        \item \textcolor{blue}{\textbf{Case 2: Empty to Single Character}}
+        \begin{itemize}
+            \item $s_1 = ""$, $s_2 = "G"$ ($|s_2|=1$)
+            \item Operation: Insert "G"
+            \item \fbox{Distance = 1}
+        \end{itemize}
+        
+        \vspace{0.2cm}
+        
+        \item \textcolor{blue}{\textbf{Case 3: Single Character to Empty}}
+        \begin{itemize}
+            \item $s_1 = "C"$ ($|s_1|=1$), $s_2 = ""$
+            \item Operation: Delete "C"
+            \item \fbox{Distance = 1}
+        \end{itemize}
+
+        \vspace{0.2cm}
+
+        
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Recursive Solution }
+    \framesubtitle{Case 4: Both Strings Non-Empty (Length $\leq$ 1)}
+
+    \textcolor{blue}{\textbf{Case 4: Single Character to Single Character}}
+    \begin{itemize}
+        \item $s_1 = "T"$, $s_2 = "G"$ (both length 1)
+        \item Possible operations:
+        \begin{itemize}
+            \item Substitute "T" → "G"
+            \item Or delete "T" and insert "G"
+        \end{itemize}
+        \item \fbox{Minimum Distance = 1}
+    \end{itemize}
+
+    \vspace{0.4cm}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Recursive Solution – Step 2}
+    \framesubtitle{Comparing First Characters}
+
+    \textbf{Step 2: Comparing First Characters of $s_1$ and $s_2$}
+
+    \vspace{0.3cm}
+
+    \begin{itemize}
+        \item If the first characters match (i.e., $s_1[0] = s_2[0]$):
+        \begin{itemize}
+            \item Return:
+            \[
+            0 + \text{edit\_distance}(s_1[1 \ldots n-1],\ s_2[1 \ldots m-1])
+            \]
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \item If the first characters do not match (i.e., $s_1[0] \neq s_2[0]$), consider three operations:
+        \begin{itemize}
+            \item \textbf{Insertion:}
+            \[
+            1 + \text{edit\_distance}(s_1,\ s_2[1 \ldots m-1])
+            \]
+
+            \item \textbf{Deletion:}
+            \[
+            1 + \text{edit\_distance}(s_1[1 \ldots n-1],\ s_2)
+            \]
+
+            \item \textbf{Substitution (Swap):}
+            \[
+            1 + \text{edit\_distance}(s_1[1 \ldots n-1],\ s_2[1 \ldots m-1])
+            \]
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \item Finally, return the minimum of these three values.
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Example of Recursive Solution (Part 1)}
+
+    \textbf{Given:}
+    \begin{itemize}
+        \item $s_1 = \texttt{GTGTACC}$ (length = 7)
+        \item $s_2 = \texttt{CCGAT}$ (length = 5)
+    \end{itemize}
+
+    \vspace{0.3cm}
+
+    \textbf{Step 1: Compare first characters}
+    \begin{itemize}
+        \item $s_1[0] = \text{G}$ and $s_2[0] = \text{C}$.
+        \item They do not match, so we need to consider the three operations:
+    \end{itemize}
+
+    \vspace{0.3cm}
+
+    \textbf{Step 2: Consider Three Possibilities}
+    \begin{itemize}
+        \item \textbf{Insertion:} 
+        \begin{itemize}
+            \item Insert a character into $s_1$. The problem reduces to finding the edit distance between $s_1$ and the string $s_2[1 \ldots 4] = \texttt{CGAT}$.
+            \item We calculate: $1 + \text{edit distance}(s_1, s_2[1 \ldots 4])$.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Example of Recursive Solution (Part 2)}
+
+    \textbf{Step 2 (continued): Consider Three Possibilities}
+    
+    \begin{itemize}
+        \item \textbf{Deletion:} 
+        \begin{itemize}
+            \item Remove the first character from $s_1$. The problem reduces to finding the edit distance between $s_1[1 \ldots 6] = \texttt{TGTACC}$ and $s_2$.
+            \item We calculate: $1 + \text{edit distance}(s_1[1 \ldots 6], s_2)$.
+        \end{itemize}
+
+        \vspace{0.3cm}
+
+        \item \textbf{Switch:}
+        \begin{itemize}
+            \item Consider swapping the first characters of both strings: $s_1[0] = \text{G}$ and $s_2[0] = \text{C}$.
+            \item They are not equal, so we perform a swap operation.
+            \item We calculate: $1 + \text{edit distance}(s_1[1 \ldots 6], s_2[1 \ldots 4])$.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Dynamic Programming Solution}
+    \framesubtitle{Memoization Approach (Part 1)}
+
+    \textbf{Key Idea:}
+    
+    \vspace{0.2cm}
+    Dynamic programming stores the results of sub-problems in a table (\texttt{memo}) and reuses them to avoid redundant calculations.
+
+    \vspace{0.3cm}
+
+    \textbf{What does \texttt{memo[i][j]} represent?}
+    \begin{itemize}
+        \item Since we have two strings $s_1$ and $s_2$, the memo should be a 2D table.
+        \item \texttt{memo[i][j]} represents the edit distance between the suffixes:
+        \[
+        s_1[i:] \text{ and } s_2[j:]
+        \]
+        \item That is, how much it costs to convert the substring starting at index $i$ in $s_1$ to the substring starting at $j$ in $s_2$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Dynamic Programming Solution}
+    \framesubtitle{Memoization Approach (Part 2)}
+
+    \textbf{Base Case Definitions:}
+    \begin{itemize}
+        \item \texttt{memo[n][m]} = 0, meaning both substrings are empty — no operations required.
+        \item If $i = n$, then \texttt{memo[i][j]} = $m - j$ (insert all remaining characters of $s_2$).
+        \item If $j = m$, then \texttt{memo[i][j]} = $n - i$ (delete all remaining characters of $s_1$).
+    \end{itemize}
+
+    \vspace{0.3cm}
+
+    \textbf{Visual Interpretation:}
+    \begin{itemize}
+        \item The last row and last column of the DP table are filled directly based on the number of characters left in one string when the other is exhausted.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Dynamic Programming Solution: Recursive Relation}
+
+    \textbf{Recursive Relation:}
+    \begin{itemize}
+        \item For \texttt{memo[1][1]}, if $s_1[0] = s_2[0]$, then no operation is needed:
+        \[
+        \texttt{memo[1][1]} = \texttt{memo[0][0]} \quad \text{(no operation)}
+        \]
+
+        \item If $s_1[0] \neq s_2[0]$, then \texttt{memo[1][1]} is calculated as the minimum of three possible operations:
+        \begin{itemize}
+            \item \texttt{1 + memo[1][0]} \hspace{1em} (insert)
+            \item \texttt{1 + memo[0][1]} \hspace{1em} (delete)
+            \item \texttt{memo[0][0] + 1} \hspace{1em} (substitute)
+        \end{itemize}
+
+        \item Combined relation:
+        \[
+        \texttt{memo[1][1]} = 
+        \min 
+        \begin{cases} 
+            1 + \texttt{memo[1][0]} & \text{(insert)} \\
+            1 + \texttt{memo[0][1]} & \text{(delete)} \\
+            \texttt{memo[0][0]} + 
+            \begin{cases}
+                0 & \text{if } s_1[0] = s_2[0] \\
+                1 & \text{if } s_1[0] \neq s_2[0]
+            \end{cases} & \text{(switch)}
+        \end{cases}
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Dynamic Programming Solution:}
+    \begin{itemize}
+        \item \textbf{Time Complexity:} The time complexity of the Edit Distance algorithm is \(O(n \times m)\), where \(n\) is the length of string 1 and \(m\) is the length of string 2. This is because we need to fill a DP table of size \(n \times m\).
+    \end{itemize}
+
+    \begin{block}{Pseudocode}
+    \begin{itemize}
+        \item \texttt{for i = 1 to n} \\
+        \quad \texttt{for j = 1 to m} \\
+        \quad\quad \texttt{if (s1[i-1] == s2[j-1])} \\
+        \quad\quad\quad \texttt{memo[i][j] = memo[i-1][j-1]} \\
+        \quad\quad \texttt{else} \\
+        \quad\quad\quad \texttt{memo[i][j] =} \\
+        \quad\quad\quad\quad \texttt{min(} \\
+        \quad\quad\quad\quad\quad \texttt{1 + memo[i-1][j]} \quad (insert), \\
+        \quad\quad\quad\quad\quad \texttt{1 + memo[i][j-1]} \quad (delete), \\
+        \quad\quad\quad\quad\quad \texttt{1 + memo[i-1][j-1]} \quad (switch) \\
+        \quad\quad\quad\quad \texttt{)}
+    \end{itemize}
+    \end{block}
+
+\end{frame}
+
+% ========== DP Table Introduction (Slide 11) ==========
+\begin{frame}
+    \frametitle{Edit Distance: Dynamic Programming Table}
+    
+    \textbf{Key Idea:}
+    \begin{itemize}
+        \item Build a 2D table where cell $(i,j)$ contains the edit distance between\\
+              \texttt{String1[0..i-1]} and \texttt{String2[0..j-1]}.
+        \item Initialize boundaries (comparisons with empty strings).
+        \item Fill the table using the recurrence relation:
+    \end{itemize}
+    
+    \vspace{0.2cm}
+    \begin{center}
+    \footnotesize
+    \[
+    dp[i][j] = \begin{cases} 
+        \min\begin{cases} 
+            dp[i-1][j] + 1 & \text{(deletion)} \\ 
+            dp[i][j-1] + 1 & \text{(insertion)} \\ 
+            dp[i-1][j-1] +  
+            \begin{cases} 
+                0 & \text{if } s_1[i-1] = s_2[j-1] \\ 
+                1 & \text{if } s_1[i-1] \neq s_2[j-1] 
+            \end{cases} & \text{(switch)} 
+        \end{cases} 
+    \end{cases}
+    \]
+    \end{center}
+    
+    \vspace{0.3cm}
+    \textbf{Next:} We'll visualize the complete DP table for:
+    \begin{itemize}
+        \item String1: \texttt{GTGTACC} (length 7)
+        \item String2: \texttt{CCGAT} (length 5)
+    \end{itemize}
+\end{frame}
+
+
+% ========== Empty DP Table Structure (Slide 12) ==========
+\begin{frame}
+    \frametitle{Edit Distance DP Table Structure}
+    
+    \textbf{Strings:} 
+    \begin{itemize}
+        \item String1 (row): \texttt{G T G T A C C \textcolor{red}{empty}} (length 7)
+        \item String2 (column): \texttt{C C G A T \textcolor{red}{empty}} (length 5)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+    \scriptsize
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+        \hline
+        & \texttt{G} & \texttt{T} & \texttt{G} & \texttt{T} & \texttt{A} & \texttt{C} & \texttt{C} & \textcolor{red}{\texttt{empty}} \\ \hline
+        \texttt{C} & & & & & & & & \\ \hline
+        \texttt{C} & & & & & & & & \\ \hline
+        \texttt{G} & & & & & & & & \\ \hline
+        \texttt{A} & & & & & & & & \\ \hline
+        \texttt{T} & & & & & & & & \\ \hline
+        \textcolor{red}{\texttt{empty}} & & & & & & & & \\ \hline
+    \end{tabular}
+    \end{center}
+    
+    \begin{itemize}
+        \item Rows represent String2 + empty string (vertical)
+        \item Columns represent String1 + empty string (horizontal)
+        \item Next: We'll fill this table step-by-step
+    \end{itemize}
+\end{frame}
+
+% ========== DP Table Explanation (Slide 13) ==========
+\begin{frame}
+    \frametitle{How We Fill the DP Table}
+    
+    \textbf{Key Rules:}
+    \begin{itemize}
+        \item \textcolor{myMaroon}{\textbf{Base Cases}}:
+        \begin{itemize}
+            \item Last row: \texttt{memo[i][m] = n - i} (cost to delete remaining in String1)
+            \item Last column: \texttt{memo[n][j] = m - j} (cost to insert remaining from String2)
+        \end{itemize}
+        
+        \item \textcolor{myMaroon}{\textbf{For Other Cells}}:
+        \begin{itemize}
+            \item If characters match: \texttt{memo[i][j] = memo[i+1][j+1]} (diagonal value)
+            \item If mismatch: Take minimum of these 3 operations:
+            \begin{itemize}
+                \item \texttt{1 + memo[i][j+1]} (delete from String1)
+                \item \texttt{1 + memo[i+1][j]} (insert from String2)
+                \item \texttt{1 + memo[i+1][j+1]} (switch )
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Filling Direction}:
+    \begin{itemize}
+        \item Start from \texttt{memo[n-1][m-1]} (bottom-right of non-base cells)
+        \item Fill \textbf{backwards} to \texttt{memo[0][0]} (top-left)
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Boundary Conditions: Last Column}
+\framesubtitle{Converting String2 to Empty String}
+
+\textbf{Initialization Logic (Last Column):}
+\begin{itemize}
+    \item We are converting the remaining part of $s_2$ to an empty string.
+    \item This requires deleting all characters from $s_2[i]$ to $s_2[m-1]$.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Logic:}
+\begin{itemize}
+    \item \texttt{for i from m to 0:} \\
+    \quad \texttt{dp[i][n] = m - i} \hfill (Delete all remaining characters)
+\end{itemize}
+
+\vspace{0.2cm}
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    & \texttt{G} & \texttt{T} & \texttt{G} & \texttt{T} & \texttt{A} & \texttt{C} & \texttt{C} & \texttt{empty} \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & \textbf{5} \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & \textbf{4} \\ \hline
+    \texttt{G} &  &  &  &  &  &  &  & \textbf{3} \\ \hline
+    \texttt{A} &  &  &  &  &  &  &  & \textbf{2} \\ \hline
+    \texttt{T} &  &  &  &  &  &  &  & \textbf{1} \\ \hline
+    \texttt{empty} &  &  &  &  &  &  &  & \textbf{0} \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.2cm}
+\begin{itemize}
+    \item Each cell shows how many deletions are needed to reach an empty string.
+    \item \textbf{Why corner value is 0:} \\
+    \quad If both strings are empty (bottom-right), no operations are needed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Boundary Conditions: Last Row}
+\framesubtitle{Converting Empty String to String1}
+
+\textbf{Initialization Logic (Last Row):}
+\begin{itemize}
+    \item We are converting an empty string to the remaining part of $s_1$.
+    \item This requires inserting all characters from $s_1[j]$ to $s_1[n-1]$.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Logic:}
+\begin{itemize}
+    \item \texttt{for j from n to 0:} \\
+    \quad \texttt{dp[m][j] = n - j} \hfill (Insert all remaining characters)
+\end{itemize}
+
+\vspace{0.2cm}
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    & \texttt{G} & \texttt{T} & \texttt{G} & \texttt{T} & \texttt{A} & \texttt{C} & \texttt{C} & \texttt{empty} \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & \textbf{5} \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & \textbf{4} \\ \hline
+    \texttt{G} &  &  &  &  &  &  &  & \textbf{3} \\ \hline
+    \texttt{A} &  &  &  &  &  &  &  & \textbf{2} \\ \hline
+    \texttt{T} &  &  &  &  &  &  &  & \textbf{1} \\ \hline
+    \texttt{empty} & \textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0} \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.2cm}
+\textbf{Explanation:}
+\begin{itemize}
+    \item \texttt{dp[m][j]} = length of \texttt{s1[j..n-1]} = \texttt{n - j}
+    \item Each cell shows how many insertions are needed to construct string1 from an empty string.
+   
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Filling the DP Table}
+\framesubtitle{Computing dp[4][6] (T vs C)}
+
+\textbf{Cell Being Filled:} Matching '\texttt{T}' (from s2) with '\texttt{C}' (from s1)
+
+\vspace{0.3cm}
+
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    & \texttt{G} & \texttt{T} & \texttt{G} & \texttt{T} & \texttt{A} & \texttt{C} & \texttt{C} & \texttt{empty} \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & 5 \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & 4 \\ \hline
+    \texttt{G} &  &  &  &  &  &  &  & 3 \\ \hline
+    \texttt{A} &  &  &  &  &  &  &  & 2 \\ \hline
+    \texttt{T} &  &  &  &  &  &  & \textcolor{red}{X} & 1 \\ \hline
+    \texttt{empty} & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+\begin{center}
+\textit{Next: We'll compute the cost for insertion, deletion, and switch to fill cell \textcolor{red}{X}.}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Filling the DP Table}
+\framesubtitle{Computing dp[4][6] (T vs C) – Cost Explanation}
+
+\textbf{Cost Calculation:}
+\begin{itemize}
+    \item \textcolor{blue}{Insertion Cost:} dp[4][7] + 1 = 1 + 1 = 2
+    \begin{itemize}
+        \scriptsize
+        \item Insert '\texttt{C}' then convert '\texttt{T}' to empty
+    \end{itemize}
+    
+    \item \textcolor{blue}{Deletion Cost:} dp[5][6] + 1 = 1 + 1 = 2
+    \begin{itemize}
+        \scriptsize
+        \item Delete '\texttt{T}' then convert empty to '\texttt{C}'
+    \end{itemize}
+    
+    \item \textcolor{blue}{Switch Cost:} dp[5][7] + 
+    $\begin{cases}
+        0 & \text{if } \texttt{T} = \texttt{C} \\
+        1 & \text{if } \texttt{T} \neq \texttt{C}
+    \end{cases}$ = 0 + 1 = 1
+    \begin{itemize}
+        \scriptsize
+        \item Switch '\texttt{T}' to '\texttt{C}' (cost 1 since characters differ)
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Result:}
+\begin{itemize}
+    \item Minimum cost is \textcolor{red}{1} (switch operation)
+    \item \textcolor{red}{X = 1} because switching '\texttt{T}' to '\texttt{C}' is optimal
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Filling the Column: Matching C vs C}
+\framesubtitle{For Matching Characters}
+
+\textbf{Target Cell:} dp[1][6] (Second 'C' vs last 'C')
+
+\vspace{0.3cm}
+\textbf{Column Progress So Far:}
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    & \texttt{G} & \texttt{T} & \texttt{G} & \texttt{T} & \texttt{A} & \texttt{C} & \texttt{C} & \texttt{empty} \\ \hline
+    \texttt{C} &  &  &  &  &  &  &  & 5 \\ \hline
+    \texttt{C} &  &  &  &  &  &  & \textcolor{red}{X} & 4 \\ \hline
+    \texttt{G} &  &  &  &  &  &  & 3 & 3 \\ \hline
+    \texttt{A} &  &  &  &  &  &  & 2 & 2 \\ \hline
+    \texttt{T} &  &  &  &  &  &  & 1 & 1 \\ \hline
+    \texttt{empty} & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+\begin{center}
+\textit{Next: We’ll calculate insertion, deletion, and switch cost for cell \textcolor{red}{X}.}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Filling the Column: Matching C vs C}
+\framesubtitle{Cost Calculation for dp[1][6]}
+
+\textbf{Calculation for dp[1][6] (C vs C):}
+\begin{itemize}
+    \item \textcolor{blue}{Insertion:} dp[1][7] + 1 = 4 + 1 = 5
+    \item \textcolor{blue}{Deletion:} dp[2][6] + 1 = 3 + 1 = 4
+    \item \textcolor{green}{Switch:} dp[2][7] + 
+    $\begin{cases} 
+        0 & \text{(since C = C)} \\
+        1 & \text{(if unequal)}
+    \end{cases}$ = 3 + 0 = 3
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Result:}
+\begin{itemize}
+    \item Minimum cost is \textcolor{green}{3}
+    \item So, \textcolor{red}{X = 3} using switch operation (no cost as characters match)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{When Substitution Isn't Optimal}
+\framesubtitle{Example: Cell dp[4][2] (A vs T)}
+
+\begin{block}{Neighbor Values in Backwards DP Table}
+\begin{center}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+ & \textbf{G} & \textbf{T} & \textbf{G} & \textbf{T} & \textbf{A} & \textbf{C} & \textbf{C} & \texttt{empty} \\ \hline
+\textbf{C} &  &  &  & 5 & 4 & 3 & 4 & 5 \\ \hline
+\textbf{C} &  &  &  & 4 & 4 & 3 & 3 & 4 \\ \hline
+\textbf{G} &  &  &  & 3 & 3 & 3 & 3 & 3 \\ \hline
+\textbf{A} &  &  &  & 3 & 2 & 2 & 2 & 2 \\ \hline
+\textbf{T} &  &  & \textcolor{red}{X} & 3 & 3 & 2 & 1 & 1 \\ \hline
+\texttt{empty} & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+\end{tabular}
+\end{center}
+\end{block}
+
+\vspace{0.3cm}
+\begin{center}
+    \textit{Next: We'll compute Insertion, Deletion, and Substitution costs to find the optimal operation.}
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{When Substitution Isn't Optimal}
+\framesubtitle{Cost Calculation for dp[4][2] (A vs T)}
+
+\begin{block}{Cost Calculations}
+\begin{itemize}
+\item \textcolor{blue}{Deletion}: $dp[i+1][j] + 1 = dp[5][2] + 1 = 5 + 1 = \textbf{6}$
+\item \textcolor{blue}{Insertion}: $dp[i][j+1] + 1 = dp[4][3] + 1 = 3 + 1 = \textbf{4}$
+\item \textcolor{blue}{Substitution}: $dp[i+1][j+1] + 1 \quad \text{(since A} \neq \text{T)} = dp[5][3] + 1 = 4 + 1 = \textbf{5}$
+\end{itemize}
+\end{block}
+
+\vspace{0.3cm}
+\begin{exampleblock}{Optimal Choice}
+\[
+\min(6, 4, 5) = \boxed{4} \quad \text{(Insertion)}
+\]
+\begin{itemize}
+\item Insertion is better than substitution \( 4 < 5 \)
+\item Edit sequence: Insert 'G' first (cost 1), then match A (total cost 4)
+\end{itemize}
+\end{exampleblock}
+
+\end{frame}
+
+    
+% ========== DP Table Visualization (Slide 12) ==========
+\begin{frame}
+    \frametitle{Edit Distance DP Table}
+    \begin{itemize}
+                \item \textbf{This is the final table after filling each box using the same recursive rule}  
+    \end{itemize}
+    \textbf{Strings:} 
+    \begin{itemize}
+        \item String1 : \texttt{G T G T A C C empty} (length 7)
+        \item String2 : \texttt{C C G A T empty} (length 5)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{center}
+    \scriptsize
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+        \hline
+        & G & T & G & T & A & C & C & empty\\ \hline
+        C & 5 & 5 & 5 & 5 & 4 & 3 & 4 & 5 \\ \hline
+        C & 5 & 4 & 4 & 4 & 4 & 3 & 3 & 4\\ \hline
+        G & 4 & 4 & 3 & 3 & 3 & 3 & 3 & 3\\ \hline
+        A & 6 & 5 & 4 & 3 & 2 & 2 & 2 & 2 \\ \hline
+        T & 6 & 5 & 4 & 3 & 3 & 2 & 1 & 1 \\ \hline
+        empty & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+    \end{tabular}
+    \end{center}
+    
+    \begin{itemize}
+        \item Numbers represent minimum operations needed.
+        \item \texttt{empty} means zero-length string.
+        \item \texttt{Memo[0][0]} contains the final edit distance
+        
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Clarification: Table Orientation}
+
+\textbf{Question :}  
+\begin{quote}
+“In most tables, the top-left is considered as \texttt{[0][0]}, but in our DP table, it seems like the bottom-right is being treated as \texttt{[0][0]}. Why is that?”
+\end{quote}
+
+\vspace{0.3cm}
+\textbf{Answer:}
+\begin{itemize}
+    \item In many textbooks and implementations, the top-left corner of a table is indexed as \texttt{[0][0]}.
+    \item However, in some dynamic programming visualizations (especially when dealing with string operations), the table is drawn such that the bottom-right corner represents \texttt{[0][0]} for easier tracking of suffixes.
+    \item Both approaches are valid — it just depends on how the algorithm is structured and visualized.
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+    \frametitle{Edit Distance DP Algorithm}
+    \framesubtitle{Top-Left Corner as \texttt{[0][0]}}
+
+    \textbf{Function Name:} \texttt{edistance(S1, S2)}
+
+    \begin{block}{Pseudocode}
+    \begin{verbatim}
+Function edistance(S1, S2):
+    For i = n-1 to 0:
+        For j = m-1 to 0:
+            Memo[i][j] = min(
+                1 + Memo[i][j+1],         # Insertion
+                1 + Memo[i+1][j],         # Deletion
+                Memo[i+1][j+1] + 
+                    (1 if S1[i] != S2[j] else 0)  # Switch
+            )
+    \end{verbatim}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Understanding the Algorithm}
+    \framesubtitle{Edit Distance DP Table Filling Strategy}
+
+    \begin{itemize}
+        \item This algorithm fills the DP table \textbf{from bottom-right to top-left}.
+        \item It assumes the \textbf{top-left cell is \texttt{[0][0]}}, following standard array notation.
+        \item Each cell \texttt{Memo[i][j]} represents the edit distance from suffix \texttt{S1[i:]} to \texttt{S2[j:]}.
+        \item The cost of \textbf{insertion}, \textbf{deletion}, and \textbf{substitution (switch)} is calculated at each step.
+        \item Substitution has zero cost when characters match, and 1 when they don't.
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Note:} You can trace back from \texttt{[0][0]} to reconstruct the optimal edit sequence.
+\end{frame}
+
+
+
+% ========== LCS Introduction (Updated Slide) ==========
+\begin{frame}
+    \frametitle{Longest Common Subsequence (LCS)}
+    \textbf{Definitions:}
+    \begin{itemize}
+        \item \textcolor{myMaroon}{\textbf{String}}: A sequence of characters (e.g., \texttt{CTGA})
+        \item \textcolor{myMaroon}{\textbf{Substring}}: Contiguous part of a string (e.g., \{\texttt{TG}\}, \{\texttt{GA}\})
+        \item \textcolor{myMaroon}{\textbf{Subsequence}}: Characters in order, but not necessarily contiguous (e.g., \{\texttt{T}, \texttt{G}, \texttt{T}\})
+        \item \textcolor{myMaroon}{\textbf{Subset}}: Any selection of characters without regard to order or position (e.g., \{\texttt{A}, \texttt{C}, \texttt{G}\})
+    \end{itemize}
+    
+    \vspace{0.4cm}
+    \textbf{Examples:}
+    \begin{itemize}
+        \item For string \texttt{CTGAAGT}:
+        \begin{itemize}
+            \item Substring: \{\texttt{GA}\}, \{\texttt{AAG}\}
+            \item Subsequence: \{\texttt{C}, \texttt{G}, \texttt{T}\}, \{\texttt{T}, \texttt{A}, \texttt{T}\}
+            \item Subset: \{\texttt{A}, \texttt{C}, \texttt{G}\} (unordered selection)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+% ========== LCS Problem (Slide 16) ==========
+\begin{frame}
+    \frametitle{Longest Common Subsequence (LCS) Problem}
+    
+    \textbf{Problem Statement:}
+    \begin{itemize}
+        \item Given two strings \texttt{S1} and \texttt{S2}, find the \textbf{length of the longest subsequence} common to both strings.
+    \end{itemize}
+
+    \vspace{0.3cm}
+    \textbf{Inputs:}
+    \begin{itemize}
+        \item Two strings \texttt{S1} and \texttt{S2}.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \textbf{Output:}
+    \begin{itemize}
+        \item The length of the longest subsequence that is common between the two strings.
+    \end{itemize}
+
+\end{frame}
+
+% ========== LCS Recursive Solution - Part 1 (Slide 17) ==========
+\begin{frame}[fragile]
+    \frametitle{LCS Recursive Solution - Part 1}
+
+    \textbf{Recursive Approach:}
+
+    \begin{block}{Base Case}
+    \begin{verbatim}
+If either string is empty:
+    Return 0
+    \end{verbatim}
+    \end{block}
+    
+    \begin{block}{Recursive Case}
+    \begin{verbatim}
+If S1[0] == S2[0]:
+    Return 1 + LCS(S1[1..n], S2[1..m])
+Else:
+    Return max(LCS(S1[1..n], S2), 
+               LCS(S1, S2[1..m]))
+    \end{verbatim}
+    \end{block}
+\end{frame}
+
+% ========== LCS Recursive Solution - Part 2 (Slide 18) ==========
+\begin{frame}
+    \frametitle{LCS Recursive Solution - Part 2}
+
+    \vspace{0.3cm}
+    \textbf{Explanation:}
+    \begin{itemize}
+        \item \textbf{Base Case:} If either of the strings is empty, return 0 because an empty string has no subsequence.
+        \item \textbf{Recursive Case:} If the first characters of both strings match, we include that character and move to the next characters of both strings. If they do not match, we compute the LCS for two cases: excluding the character from either string.
+    \end{itemize}
+\end{frame}
+
+
+
+
+% ========== LCS Dynamic Programming (Slide 17) ==========
+\begin{frame}[fragile]
+    \frametitle{LCS Dynamic Programming}
+    \textbf{Function: LCS}
+
+    \begin{block}{Initialization}
+    \begin{verbatim}
+LCS(n, m):
+    memo[n][m] = 0  
+    memo[n][i] = 0  
+    memo[j][m] = 0  
+    \end{verbatim}
+    \end{block}
+    
+    \begin{block}{DP Fill}
+    \begin{verbatim}
+For i = n-1 to 0:
+    For j = m-1 to 0:
+        memo[i][j] = max(
+            (1 + memo[i+1][j+1]) -> if S1[i]==S2[j],
+            memo[i+1][j],
+            memo[i][j+1]
+        )
+    \end{verbatim}
+    \end{block}
+\end{frame}
+
+% ========== Explanation of DP Solution (Slide 18) ==========
+\begin{frame}
+    \frametitle{LCS Dynamic Programming - Explanation}
+    \textbf{Explanation:}
+    
+    \begin{itemize}
+        \item \textbf{Initialization:} We start by setting the boundary conditions. The last row and column are initialized to 0, as the LCS with an empty string has a length of 0.
+        \item \textbf{DP Fill:} We fill the DP table by iterating backwards through the strings. For each pair of characters, we check:
+            \begin{itemize}
+                \item If the characters match ($S1[i] == S2[j]$), we add 1 to the result from the diagonally next cell (memo[i+1][j+1]).
+                \item Otherwise, we take the maximum of either excluding the character from string1 or string2 (memo[i+1][j] or memo[i][j+1]).
+            \end{itemize}
+        \item \textbf{Result:} The value at memo[0][0] contains the length of the longest common subsequence.
+    \end{itemize}
+\end{frame}
+
+
+
+\end{document}
